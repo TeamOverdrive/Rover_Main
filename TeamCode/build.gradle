@@ -15,5 +15,5 @@
 apply from: '../build.common.gradle'
 
 dependencies {
-    compile 'org.openftc:rev-extensions-2:1.0'
+    implementation 'org.openftc:rev-extensions-2:1.0'
 }
