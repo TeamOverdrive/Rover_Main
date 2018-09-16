@@ -1,4 +1,4 @@
-package com.team2753.test;
+package com.team2753.Other.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

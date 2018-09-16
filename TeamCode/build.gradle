@@ -13,7 +13,3 @@
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
-
-dependencies {
-    implementation 'org.openftc:rev-extensions-2:1.0'
-}
