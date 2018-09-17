@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp
-public class driveteleop extends OpMode{
+public class drivetestteleop extends OpMode{
 
     private DcMotor rightBackMotor;
     private DcMotor rightFrontMotor;
