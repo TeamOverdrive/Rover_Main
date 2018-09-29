@@ -1,10 +1,9 @@
-package com.team2753.Other.test;
+package com.team2753.other.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -15,6 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp
+@Disabled
 public class drivetestteleop extends OpMode{
 
     private DcMotor rightBackMotor;
