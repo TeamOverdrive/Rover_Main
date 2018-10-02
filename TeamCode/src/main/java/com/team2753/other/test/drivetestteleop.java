@@ -8,13 +8,13 @@ import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 9/15/2018.
- * Test Teleop
+ * Test Teleop used to test dt after overnight
  */
 
 
 
 @TeleOp
-@Disabled
+//@Disabled
 public class drivetestteleop extends OpMode{
 
     private DcMotor rightBackMotor;

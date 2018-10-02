@@ -9,6 +9,7 @@ import com.vuforia.PIXEL_FORMAT;
 import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaRoverRuckus;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.R;
@@ -28,11 +29,12 @@ public class VuMark {
     private String vuforiaLicenseKey ="";
     private com.team2753.libs.subsystems.ClosableVuforiaLocalizer vuforia;
     private VuforiaTrackables roverTrackables;
-    private VuforiaTrackable roverTrackable;
-    private String ouputVuMark = roverTrackable.getName();
+    private VuforiaTrackable roverTemplate;
+    private String ouputVuMark = "None";
     public boolean targetVisible = false;
     VuforiaLocalizer.Parameters params;
 
+    /*
     public enum roverVumarks{
         UNKNOWN,
         BLUE_ROVER,
@@ -40,8 +42,7 @@ public class VuMark {
         FRONT_CRATER,
         BACK_SPACE
     }
-
-    roverVumarks roverTarget;
+    */
 
     // Bitmap things
     private Image img = null;
@@ -134,10 +135,6 @@ public class VuMark {
         if(vuMark != "UNKNOWN") {
             this.ouputVuMark = vuMark;
         }
-        switch (roverTarget){
-            case UNKNOWN:
-
-        }
     }
 
     /**
@@ -196,6 +193,10 @@ public class VuMark {
         return (red(pixel) + green(pixel) + blue(pixel));
     }
 
+    public static int yellow(int pixel){
+        return (red(pixel) + green(pixel));
+    }
+
     /**
      * @param finalBitmap Save Bitmap to /root/saved_images
      */
@@ -203,8 +204,7 @@ public class VuMark {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/saved_images");
         myDir.mkdirs();
-        Random generator = new Random();
-        long n = 10000;
+        long n;
         n = System.currentTimeMillis();
         String fname = "Image-"+ n +".jpg";
         File file = new File (myDir, fname);

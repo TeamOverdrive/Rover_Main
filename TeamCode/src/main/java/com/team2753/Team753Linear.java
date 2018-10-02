@@ -1,6 +1,7 @@
 package com.team2753;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -16,6 +17,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaRoverRuckus;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
+import static com.team2753.libs.VuMark.blue;
+import static com.team2753.libs.VuMark.red;
+
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 9/27/2018.
  */
@@ -30,7 +34,7 @@ public abstract class Team753Linear extends LinearOpMode{
             "0BYc3tnsaaDJww59RNJ6IK9D3PZM+oPDrmF9ukQrc/jw+u+6Zm4wQHieHt9urSwLR7dgz0V3aatDx1V7y";
 
     private static VuMark vumark = new VuMark(vuforiaKey);
-    protected VuMark.roverVumarks savedVumark  = VuMark.roverVumarks.UNKNOWN;
+    protected String savedVumark  = "None";
 
     /*
     private Bitmap bm = null;
@@ -71,8 +75,87 @@ public abstract class Team753Linear extends LinearOpMode{
 
             RobotLog.v("================ AutoTransitioner =============");
             AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
-        }
 
+            /*
+
+            RobotLog.v("================ VuCam Loop =============");
+            while (!isStarted() && !isStopRequested()) {
+                vumark.update();
+
+                telemetry.clearAll();
+                telemetry.addData("VuMark", vumark.getOuputVuMark());
+                telemetry.update();
+
+                savedVumark = vumark.getOuputVuMark();
+                try {
+                    bm = vumark.getBm(20);
+                } catch (Exception e) {
+                    bm = null;
+                }
+
+            }
+
+            while (bm == null) {
+                try {
+                    bm = vumark.getBm(20);
+                } catch (Exception e) {
+                    bm = null;
+                }
+            }
+
+            RobotLog.v("================ VuCam Loop Finished =============");
+
+            RobotLog.v("================ Scan Bitmap =============");
+            int redValue = 0;
+            int blueValue = 0;
+
+            // Scan area for red and blue pixels
+            for (int x = (bm.getWidth() / 2) + (bm.getWidth() / 6);
+                 x < ((bm.getWidth() / 2) + (18 * bm.getWidth() / 64)); x++) {
+                for (int y = (2 * bm.getHeight() / 5) + (bm.getHeight() / 2); y < bm.getHeight(); y++) {
+                    int pixel = bm.getPixel(x, y);
+                    redValue = red(pixel);
+                    blueValue = blue(pixel);
+
+                    if (redValue > blueValue) {
+                        redVotes++;
+                        bm.setPixel(x, y, Color.RED);
+                    } else if (blueValue > redValue) {
+                        blueVotes++;
+                        bm.setPixel(x, y, Color.BLUE);
+                    }
+                }
+            }
+
+            SaveImage(bm);
+
+            if (redVotes > blueVotes)
+                jewel_Color = Jewel_Color.Red;
+            else if (redVotes < blueVotes)
+                jewel_Color = Jewel_Color.Blue;
+                */
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    sleep(1000);
+                    vumark.disableVuforia();
+                    Thread.yield();
+                }
+            }).start();
+        }
+        else {
+            SetStatus("Initialized, Waiting for Start");
+            waitForStart();
+        }
+        runtime.reset();
+        SetStatus("Running OpMode");
+        RobotLog.v("================ Running OpMode =============");
+    }
+
+    public void SetStatus(String update) {
+        status.setValue(update);
+        telemetry.update();
     }
 
     public void resetRuntime() {
@@ -83,10 +166,10 @@ public abstract class Team753Linear extends LinearOpMode{
     public void updateTelemetry() {
 
         if (isAuto) {
-            dashboardTelemetry.addData("Match Time", 30 - getRuntime());
+            dashboardTelemetry.addData("Match Time", (int)(30 - getRuntime()));
         }
         if (!isAuto) {
-            dashboardTelemetry.addData("Match Time", 120 - runtime.seconds());
+            dashboardTelemetry.addData("Match Time", (int)(120 - runtime.seconds()));
             if (runtime.seconds() > 90) {
                 dashboardTelemetry.addData("Phase", "End game");
             }
