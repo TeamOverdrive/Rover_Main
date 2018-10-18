@@ -17,7 +17,7 @@ public class Lift implements Subsystem {
 
     private DcMotor leftLift, rightLift = null;
 
-    private static final double brakepower = 0;
+    private static final double brakePower = 0;
 
     @Override
     public void init(LinearOpMode linearOpMode, boolean auto) {
@@ -51,8 +51,13 @@ public class Lift implements Subsystem {
         rightLift.setPower(power);
     }
 
+    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior mode){
+        rightLift.setZeroPowerBehavior(mode);
+        leftLift.setZeroPowerBehavior(mode);
+    }
+
     public void brake(){
-        setPower(brakepower);
+        setPower(brakePower);
     }
 
     public int getLeftPosition(){

@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 9/16/2018.
  */
-public class Drive extends TankDrive implements Subsystem{
+public class Drive /*extends TankDrive */implements Subsystem{
 
 
     public static final MotorConfigurationType MOTOR_CONFIG = MotorConfigurationType.getMotorType(NeveRest40Gearmotor.class);
@@ -39,9 +39,12 @@ public class Drive extends TankDrive implements Subsystem{
     private DcMotorEx leftFront, leftBack, rightBack, rightFront;
     private List<DcMotorEx> motors;
 
+    /*
+
     public Drive(double trackWidth, NanoClock clock) {
         super(trackWidth, clock);
     }
+    */
 
     //Gyro
 
@@ -111,6 +114,8 @@ public class Drive extends TankDrive implements Subsystem{
     }
 
 
+    /*
+
     @NotNull
     @Override
     public List<Double> getWheelPositions() {
@@ -121,4 +126,5 @@ public class Drive extends TankDrive implements Subsystem{
     public void setMotorPowers(double v, double v1) {
         setLeftRightPower(v,v1);
     }
+    */
 }
