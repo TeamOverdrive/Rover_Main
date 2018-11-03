@@ -2,6 +2,7 @@ package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.team2753.Team753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -20,7 +21,7 @@ public class Lift implements Subsystem {
     private static final double brakePower = 0;
 
     @Override
-    public void init(LinearOpMode linearOpMode, boolean auto) {
+    public void init(Team753Linear linearOpMode, boolean auto) {
         leftLift = (DcMotor) linearOpMode.hardwareMap.get("left_lift");
         rightLift = (DcMotor) linearOpMode.hardwareMap.get("right_lift");
 

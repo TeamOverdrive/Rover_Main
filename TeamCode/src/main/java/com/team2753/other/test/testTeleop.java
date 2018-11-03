@@ -69,6 +69,8 @@ public class testTeleop extends Team753Linear{
             //Apply power to motor
             Robot.getLift().setPower(liftThrottle);
 
+            updateTelemetry();
+
         }
     }
 }

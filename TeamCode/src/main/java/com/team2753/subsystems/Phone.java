@@ -1,19 +1,16 @@
 package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.team2753.Team753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
- * Created by David Zheng | FTC 2753 Team Overdrive on 9/27/2018.
+ * Created by David Zheng | FTC 2753 Team Overdrive on 10/30/2018.
  */
-public class Intake implements Subsystem {
+public class Phone implements Subsystem{
 
-
-    private DcMotor intakeMotor;
-    private DcMotor slideMotor;
+    //TODO: Phone servo after mounted
 
     @Override
     public void init(Team753Linear linearOpMode, boolean auto) {

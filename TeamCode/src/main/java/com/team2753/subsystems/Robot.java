@@ -2,6 +2,7 @@ package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.RobotLog;
+import com.team2753.Team753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -40,7 +41,7 @@ public class Robot {
      * @param autonomous If the OpMode is for autonomous mode or not.
      */
 
-    public void init(LinearOpMode opmode, boolean autonomous) {
+    public void init(Team753Linear opmode, boolean autonomous) {
         // Init all subsystems
         RobotLog.v("================ Robot Subsystems Init Loop Started =============");
         for (Subsystem subsystem:subsystems){

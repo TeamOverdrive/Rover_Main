@@ -53,18 +53,26 @@ public abstract class Team753Linear extends LinearOpMode{
     protected static ElapsedTime runtime = new ElapsedTime();
     private boolean isAuto = false;
 
+    /*
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
+    */
     private Telemetry.Item status;
 
     //Init  method
 
     public void waitForStart(String OpModeName, boolean auto){
 
+        /*
         dashboardTelemetry.setAutoClear(true);
         status = dashboardTelemetry.addData("Status", "Initializing...");
         Telemetry.Item currentOpMode = dashboardTelemetry.addData("Running", OpModeName);
         dashboardTelemetry.update();
+        */
+
+        telemetry.setAutoClear(true);
+        status = telemetry.addData("Status", "Initializing...");
+        telemetry.addData("Running", OpModeName);
 
         Robot.init(this, auto);
 
@@ -166,21 +174,21 @@ public abstract class Team753Linear extends LinearOpMode{
     public void updateTelemetry() {
 
         if (isAuto) {
-            dashboardTelemetry.addData("Match Time", (int)(30 - getRuntime()));
+            telemetry.addData("Match Time", (int)(30 - getRuntime()));
         }
         if (!isAuto) {
-            dashboardTelemetry.addData("Match Time", (int)(120 - runtime.seconds()));
+            telemetry.addData("Match Time", (int)(120 - runtime.seconds()));
             if (runtime.seconds() > 90) {
-                dashboardTelemetry.addData("Phase", "End game");
+                telemetry.addData("Phase", "End game");
             }
             if (runtime.seconds() > 120) {
-                dashboardTelemetry.addData("Phase", "Overtime");
+                telemetry.addData("Phase", "Overtime");
             }
         }
 
         Robot.outputToTelemetry(telemetry);
 
-        dashboardTelemetry.update();
+        telemetry.update();
     }
 
     public void finalAction() {

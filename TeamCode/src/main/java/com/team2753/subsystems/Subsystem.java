@@ -1,6 +1,6 @@
 package com.team2753.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.team2753.Team753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 
 public interface Subsystem {
-    void init(LinearOpMode linearOpMode, boolean auto);
+    void init(Team753Linear linearOpMode, boolean auto);
     void zeroSensors();
     void stop();
     void outputToTelemetry(Telemetry telemetry);

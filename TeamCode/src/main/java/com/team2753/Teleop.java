@@ -14,7 +14,12 @@ public class Teleop extends Team753Linear{
     public void runOpMode(){
 
         waitForStart("Teleop", false);
-        dashboardTelemetry.addLine("Yeet");
-        sleep(5000);
+
+        while(opModeIsActive()) {
+
+            SetStatus("Running Loop");
+            updateTelemetry();
+
+        }
     }
 }
