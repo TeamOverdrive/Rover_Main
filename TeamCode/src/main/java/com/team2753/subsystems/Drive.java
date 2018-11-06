@@ -1,7 +1,6 @@
 package com.team2753.subsystems;
 
 import com.qualcomm.hardware.motors.NeveRest40Gearmotor;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
@@ -9,7 +8,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team2753.Team753Linear;
 import com.team2753.libs.hardware.RevIMU;
-
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -41,7 +39,7 @@ public class Drive implements Subsystem{
     private DcMotorEx leftFront, leftBack, rightBack, rightFront;
     private List<DcMotorEx> motors;
 
-    private RevIMU imu1;
+    private RevIMU imu;
 
     /*
     TODO: Get rr working after Nov 11.
@@ -72,8 +70,10 @@ public class Drive implements Subsystem{
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
+
         if(auto){
-            imu1 = new RevIMU("imu 1", linearOpMode.hardwareMap);
+            imu = new RevIMU("imu", linearOpMode.hardwareMap);
+            zeroSensors();
         }
     }
 
@@ -82,6 +82,8 @@ public class Drive implements Subsystem{
         stop();
         while(getLeftCurrentPosition()!=0 && getRightCurrentPosition()!=0)
             setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //TODO: reset gyro here?
     }
 
     @Override
@@ -142,7 +144,7 @@ public class Drive implements Subsystem{
 
     public double getGyroAngleDegrees() {
         try {
-            return (imu1.getNormalHeading());
+            return (imu.getNormalHeading());
         } catch (Exception e){
             return 0;
         }

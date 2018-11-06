@@ -1,9 +1,8 @@
 package com.team2753;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
-
-import com.acmerobotics.dashboard.FtcDashboard;
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -12,13 +11,6 @@ import com.team2753.libs.VuMark;
 import com.team2753.subsystems.Robot;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaRoverRuckus;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
-import static com.team2753.libs.VuMark.blue;
-import static com.team2753.libs.VuMark.red;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 9/27/2018.
@@ -35,6 +27,8 @@ public abstract class Team753Linear extends LinearOpMode{
 
     private static VuMark vumark = new VuMark(vuforiaKey);
     protected String savedVumark  = "None";
+
+    private GoldAlignDetector detector;
 
     /*
     private Bitmap bm = null;
@@ -57,6 +51,7 @@ public abstract class Team753Linear extends LinearOpMode{
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
     */
+
     private Telemetry.Item status;
 
     //Init  method
@@ -77,80 +72,34 @@ public abstract class Team753Linear extends LinearOpMode{
         Robot.init(this, auto);
 
         if(auto){
-            RobotLog.v("================ Start VuCam =============");
-            vumark.setup(VuforiaLocalizer.CameraDirection.BACK, true);
-            //FRONT is selfie camera, BACK is main camera
-
+            isAuto = true;
             RobotLog.v("================ AutoTransitioner =============");
             AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
-            /*
+            /*DogeCV*/
+            //init DogeCV
+            detector = new GoldAlignDetector();
+            detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
+            detector.useDefaults();
 
-            RobotLog.v("================ VuCam Loop =============");
-            while (!isStarted() && !isStopRequested()) {
-                vumark.update();
+            // Optional Tuning
+            detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+            detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+            detector.downscale = 0.4; // How much to downscale the input frames
 
-                telemetry.clearAll();
-                telemetry.addData("VuMark", vumark.getOuputVuMark());
-                telemetry.update();
+            detector.areaScoringMethod = DogeCV.AreaScoringMethod.PERFECT_AREA; // Can also be PERFECT_AREA
+            detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+            detector.maxAreaScorer.weight = 0.005;
 
-                savedVumark = vumark.getOuputVuMark();
-                try {
-                    bm = vumark.getBm(20);
-                } catch (Exception e) {
-                    bm = null;
-                }
+            detector.ratioScorer.weight = 5;
+            detector.ratioScorer.perfectRatio = 1.0;
 
-            }
+            detector.enable();
 
-            while (bm == null) {
-                try {
-                    bm = vumark.getBm(20);
-                } catch (Exception e) {
-                    bm = null;
-                }
-            }
+            //Relic Recovery Vuforia Jewel Detection removed. refer to Relic_Main for code
 
-            RobotLog.v("================ VuCam Loop Finished =============");
+            //TODO: Mineral Position Loop here when SamplingOrderDetector is stablized
 
-            RobotLog.v("================ Scan Bitmap =============");
-            int redValue = 0;
-            int blueValue = 0;
-
-            // Scan area for red and blue pixels
-            for (int x = (bm.getWidth() / 2) + (bm.getWidth() / 6);
-                 x < ((bm.getWidth() / 2) + (18 * bm.getWidth() / 64)); x++) {
-                for (int y = (2 * bm.getHeight() / 5) + (bm.getHeight() / 2); y < bm.getHeight(); y++) {
-                    int pixel = bm.getPixel(x, y);
-                    redValue = red(pixel);
-                    blueValue = blue(pixel);
-
-                    if (redValue > blueValue) {
-                        redVotes++;
-                        bm.setPixel(x, y, Color.RED);
-                    } else if (blueValue > redValue) {
-                        blueVotes++;
-                        bm.setPixel(x, y, Color.BLUE);
-                    }
-                }
-            }
-
-            SaveImage(bm);
-
-            if (redVotes > blueVotes)
-                jewel_Color = Jewel_Color.Red;
-            else if (redVotes < blueVotes)
-                jewel_Color = Jewel_Color.Blue;
-                */
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sleep(1000);
-                    vumark.disableVuforia();
-                    Thread.yield();
-                }
-            }).start();
         }
         else {
             SetStatus("Initialized, Waiting for Start");
@@ -192,11 +141,13 @@ public abstract class Team753Linear extends LinearOpMode{
     }
 
     public void finalAction() {
+        if(isAuto)
+            detector.disable();
         Robot.stop();
         requestOpModeStop();
     }
 
-    public void waitForTick(long periodMs) {
+    public void threadSleep(long periodMs) {
         long remaining = periodMs - (long) runtime.milliseconds();
 
         // sleep for the remaining portion of the regular cycle period.
