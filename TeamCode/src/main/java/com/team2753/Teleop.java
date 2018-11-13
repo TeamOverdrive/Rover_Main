@@ -45,6 +45,10 @@ public class Teleop extends Team753Linear{
                 float leftThrottle = gamepad1.left_stick_y;
                 float rightThrottle = gamepad1.right_stick_y;
 
+                //Invert the y values
+                leftThrottle = leftThrottle*-1;
+                rightThrottle = rightThrottle*-1;
+
                 // Clip the left and right throttle values so that they never exceed +/- 1.
                 leftThrottle = Range.clip(leftThrottle, -1, 1);
                 rightThrottle = Range.clip(rightThrottle, -1, 1);

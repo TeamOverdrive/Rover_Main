@@ -16,7 +16,7 @@ public class Crater_Park extends Team753Linear {
 
         int i = 0;
         while(opModeIsActive() && i == 0){
-            Robot.getDrive().encoderDrive(0.8, -36,-36,10, this);
+            Robot.getDrive().encoderDrive(0.8, 36,36,10, this);
             i++;
         }
         finalAction();

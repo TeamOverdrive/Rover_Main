@@ -63,10 +63,10 @@ public class Drive implements Subsystem{
         leftFront = linearOpMode.hardwareMap.get(DcMotorEx.class, "left_front");
 
 
-        rightFront.setDirection(DcMotor.Direction.FORWARD);
-        rightBack.setDirection(DcMotor.Direction.FORWARD);
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightBack.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.FORWARD);
 
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
