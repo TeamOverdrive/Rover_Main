@@ -13,26 +13,55 @@ public class Crater extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater Autonomous", true);
+        waitForStart("Crater Autonomous", true, this);
+        int i = 0;
+        while(opModeIsActive() && i == 0) {
+            //Flip phone up
 
-        //Flip phone up
+            //Land
+            Robot.getLift().setPower(1);
+            threadSleep(2000);
+            Robot.getDrive().encoderTurn(5, 0.8, 5, this);
+            Robot.getDrive().encoderTurn(-10, 0.8, 5, this);
+            Robot.getDrive().encoderTurn(5, 0.8, 5, this);
+            Robot.getDrive().encoderDrive(0.9, 3, 3, 5, this);
 
-        //Land
+            //Deploy intake
 
-        //Deploy intake
+            //Forward ~3 inches
+            Robot.getDrive().encoderDrive(0.8, 3, 3, 5, this);
+            Robot.getLift().setPower(-1);
+            sleep(3000);
+            Robot.getLift().brake();
 
-        //Forward ~3 inches
 
-        //Turn towards mineral sample
 
-        //Collect Mineral
+            int oops = 0;
+            //Align to Mineral
+            while (getGoldRelativePosition() != Gold_Relative_Position.ALIGNED && oops < 10) {
+                switch (getGoldRelativePosition()) {
+                    case LEFT:
+                        Robot.getDrive().encoderTurn(30, 0.8, 5, this);
+                    case RIGHT:
+                        Robot.getDrive().encoderTurn(-30, 0.8, 5, this);
+                    case UNKNOWN:
+                        oops++;
+                }
+            }
 
-        //Drive to Depot
+            //Collect Mineral
+            Robot.getDrive().encoderDrive(0.8, 30, 30, 8, this);
 
-        //Deposit Team Marker
+            //Drive to ~~Depot~~ Crater
+            Robot.getDrive().encoderDrive(0.8, 30, 30, 8, this);
 
-        //Return to Crater
+            //Deposit Team Marker
+            Robot.getMarker().up();
 
+            //Return to Crater
+            i++;
+
+        }
         finalAction();
     }
 }

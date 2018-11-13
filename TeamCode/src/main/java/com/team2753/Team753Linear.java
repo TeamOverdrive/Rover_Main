@@ -42,6 +42,13 @@ public abstract class Team753Linear extends LinearOpMode{
         RIGHT
     }
 
+    public enum Gold_Relative_Position{
+        LEFT,
+        RIGHT,
+        ALIGNED,
+        UNKNOWN
+    }
+
     protected Gold_Position goldPosition  = null;
 
     protected static ElapsedTime runtime = new ElapsedTime();
@@ -56,7 +63,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
     //Init  method
 
-    public void waitForStart(String OpModeName, boolean auto){
+    public void waitForStart(String OpModeName, boolean auto, LinearOpMode linearOpMode){
 
         /*
         dashboardTelemetry.setAutoClear(true);
@@ -73,38 +80,18 @@ public abstract class Team753Linear extends LinearOpMode{
 
         if(auto){
             isAuto = true;
-            RobotLog.v("================ AutoTransitioner =============");
-            AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
+            //RobotLog.v("================ AutoTransitioner =============");
+            AutoTransitioner.transitionOnStop(linearOpMode, "Teleop"); //Auto Transitioning
 
-            /*DogeCV*/
-            //init DogeCV
-            detector = new GoldAlignDetector();
-            detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
-            detector.useDefaults();
-
-            // Optional Tuning
-            detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-            detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
-            detector.downscale = 0.4; // How much to downscale the input frames
-
-            detector.areaScoringMethod = DogeCV.AreaScoringMethod.PERFECT_AREA; // Can also be PERFECT_AREA
-            detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
-            detector.maxAreaScorer.weight = 0.005;
-
-            detector.ratioScorer.weight = 5;
-            detector.ratioScorer.perfectRatio = 1.0;
-
-            detector.enable();
+            initGoldDetector();
 
             //Relic Recovery Vuforia Jewel Detection removed. refer to Relic_Main for code
 
             //TODO: Mineral Position Loop here when SamplingOrderDetector is stablized
 
         }
-        else {
-            SetStatus("Initialized, Waiting for Start");
-            waitForStart();
-        }
+        SetStatus("Initialized, Waiting for Start");
+        waitForStart();
         runtime.reset();
         SetStatus("Running OpMode");
         RobotLog.v("================ Running OpMode =============");
@@ -145,6 +132,82 @@ public abstract class Team753Linear extends LinearOpMode{
             detector.disable();
         Robot.stop();
         requestOpModeStop();
+    }
+
+    public void initGoldDetector(){
+        /*DogeCV*/
+        //init DogeCV
+        detector = new GoldAlignDetector();
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
+        detector.useDefaults();
+
+        // Optional Tuning
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        //TODO: tune perfectArea
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.PERFECT_AREA; // Can also be PERFECT_AREA
+        detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005;
+
+        detector.ratioScorer.weight = 5;
+        detector.ratioScorer.perfectRatio = 1.0;
+
+        detector.enable();
+    }
+
+    public double getGoldPos(){return detector.getXPosition();}
+
+    public boolean goldVisible(){return detector.isFound();}
+
+    public boolean goldAligned(){return detector.getAligned();}
+
+    public void sampleGoldMineral(){
+
+        int invisibleCounter = 0;
+        while(!goldAligned()){
+            if(!goldVisible()){
+                invisibleCounter++;
+                telemetry.addData("Invisiblity Count", invisibleCounter);
+            }
+            else if(!goldAligned()&&getGoldPos()>300){
+                //turn to the right
+                telemetry.addData("Turning", "Right");
+            }
+            else if (!goldAligned()&&getGoldPos()<300){
+                //turn to the left
+                telemetry.addData("Turning", "Left");
+            }
+        }
+        //should now be aligned
+        telemetry.addLine("Gold Aligned!!!");
+    }
+
+    private int vi = 0;
+    public Gold_Relative_Position getGoldRelativePosition(){
+
+        Gold_Relative_Position result = null;
+
+        while(!goldVisible() && vi < 10) {
+            if (goldAligned())
+                result =  Gold_Relative_Position.ALIGNED;
+            else if(!goldAligned()&&getGoldPos()>300){
+                //turn to the right
+                result = Gold_Relative_Position.RIGHT;
+            }
+            else if (!goldAligned()&&getGoldPos()<300){
+                //turn to the left
+                result = Gold_Relative_Position.LEFT;
+            }
+            else if (!goldVisible()){
+                result = Gold_Relative_Position.UNKNOWN;
+                vi++;
+            }
+        }
+
+        return result;
+
     }
 
     public void threadSleep(long periodMs) {

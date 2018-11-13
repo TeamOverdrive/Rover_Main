@@ -34,12 +34,12 @@ public class Lift implements Subsystem {
 
     @Override
     public void zeroSensors() {
-
+        stop();
     }
 
     @Override
     public void stop() {
-        brake();
+        setPower(0);
     }
 
     @Override
@@ -61,13 +61,9 @@ public class Lift implements Subsystem {
         setPower(brakePower);
     }
 
-    public int getLeftPosition(){
-        return leftLift.getCurrentPosition();
-    }
+    public int getLeftPosition(){return leftLift.getCurrentPosition();}
 
-    public int getRightPosition(){
-        return getRightPosition();
-    }
+    public int getRightPosition(){return rightLift.getCurrentPosition();}
 
     public int getPosition(){
         int position = ((getLeftPosition()+getRightPosition())/2);

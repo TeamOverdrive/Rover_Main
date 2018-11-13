@@ -7,32 +7,64 @@ import com.team2753.Team753Linear;
  * Created by David Zheng | FTC 2753 Team Overdrive on 11/3/2018.
  */
 
-@Autonomous(name = "Crater Auto", group = "0_auto")
+@Autonomous(name = "Depot Auto", group = "0_auto")
 //@Disabled
 public class Depot extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater Autonomous", true);
+        waitForStart("Crater Autonomous", true, this);
 
-        //Flip phone up
+        int i = 0;
 
-        //Land
+        while (opModeIsActive() && i == 0) {
 
-        //Deploy intake
+            //Flip phone up
 
-        //Forward ~3 inches
+            //Land
+            Robot.getLift().setPower(1);
+            threadSleep(2000);
+            Robot.getDrive().encoderTurn(5, 0.8, 5, this);
+            Robot.getDrive().encoderTurn(-10, 0.8, 5, this);
+            Robot.getDrive().encoderTurn(5, 0.8, 5, this);
+            Robot.getDrive().encoderDrive(0.9, 3, 3, 5, this);
 
-        //Turn towards mineral sample
+            //Deploy intake
 
-        //Collect Mineral
+            //Forward ~3 inches
+            Robot.getDrive().encoderDrive(0.8, 3, 3, 5, this);
+            Robot.getLift().setPower(-1);
+            sleep(3000);
+            Robot.getLift().brake();
 
-        //Drive forward into depot
+            int oops = 0;
+            //Align to Mineral
+            while (getGoldRelativePosition() != Gold_Relative_Position.ALIGNED && oops < 10) {
+                switch (getGoldRelativePosition()) {
+                    case LEFT:
+                        Robot.getDrive().encoderTurn(30, 0.8, 5, this);
+                    case RIGHT:
+                        Robot.getDrive().encoderTurn(-30, 0.8, 5, this);
+                    case UNKNOWN:
+                        oops++;
+                }
+            }
 
-        //Deposit Team Marker
+            //Collect Mineral
+            Robot.getDrive().encoderDrive(0.8, 30, 30, 8, this);
 
-        //Drive to Crater
+            //Drive forward into depot
+            Robot.getDrive().encoderDrive(0.8, 30, 30, 8, this);
 
+            //Deposit Team Marker
+            Robot.getMarker().deploy();
+
+            //Drive to Crater
+
+            i++;
+        }
         finalAction();
+
+
     }
 }

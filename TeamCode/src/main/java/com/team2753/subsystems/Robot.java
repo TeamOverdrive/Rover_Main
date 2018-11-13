@@ -22,10 +22,11 @@ public class Robot {
     private Drive mDrive = new Drive();
     private Intake mIntake = new Intake();
     private Lift mLift = new Lift();
-
+    private Phone mPhone = new Phone();
+    private Marker mMarker = new Marker();
 
     private List<Subsystem> subsystems = Arrays.asList(
-            mDrive, mLift, mIntake);
+            mDrive, mLift, mIntake, mPhone, mMarker);
 
     /**
      * @param telemetry Opmode Telemetry object
@@ -91,4 +92,8 @@ public class Robot {
     public Intake getIntake() {
         return mIntake;
     }
+
+    public Phone getPhone() {return mPhone;}
+
+    public Marker getMarker(){return mMarker;}
 }

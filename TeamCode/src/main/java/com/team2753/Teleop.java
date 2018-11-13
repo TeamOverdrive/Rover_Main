@@ -16,7 +16,7 @@ public class Teleop extends Team753Linear{
     @Override
     public void runOpMode(){
 
-        waitForStart("Teleop", false);
+        waitForStart("Teleop", false, this);
 
         while(opModeIsActive()){
 
@@ -72,6 +72,11 @@ public class Teleop extends Team753Linear{
             liftThrottle = liftThrottle * -1;
             //Apply power to motor
             Robot.getLift().setPower(liftThrottle);
+
+            if(gamepad1.right_bumper)
+                Robot.getMarker().up();
+            if(gamepad1.left_bumper)
+                Robot.getMarker().deploy();
 
 
 
