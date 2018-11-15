@@ -13,11 +13,9 @@ public class Depot extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater Autonomous", true, this);
+        waitForStart("Crater Autonomous", true);
 
-        int i = 0;
-
-        while (opModeIsActive() && i == 0) {
+        while (opModeIsActive() && !isStopRequested()) {
 
             //Flip phone up
 
@@ -61,10 +59,7 @@ public class Depot extends Team753Linear{
 
             //Drive to Crater
 
-            i++;
+            finalAction();
         }
-        finalAction();
-
-
     }
 }

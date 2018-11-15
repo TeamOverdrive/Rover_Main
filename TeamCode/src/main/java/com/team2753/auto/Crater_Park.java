@@ -12,13 +12,11 @@ public class Crater_Park extends Team753Linear {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater_Park", true, this);
-
-        int i = 0;
-        while(opModeIsActive() && i == 0){
-            Robot.getDrive().encoderDrive(0.8, 36,36,10, this);
-            i++;
+        waitForStart("Crater_Park", true);
+        while(opModeIsActive() && !isStopRequested()) {
+            Robot.getDrive().encoderDrive(0.6, 36,36,10, this);
+            finalAction();
+            requestOpModeStop();
         }
-        finalAction();
     }
 }

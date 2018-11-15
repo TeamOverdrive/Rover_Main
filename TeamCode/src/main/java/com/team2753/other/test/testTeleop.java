@@ -16,7 +16,7 @@ public class testTeleop extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Teleop Test", false, this);
+        waitForStart("Teleop Test", false);
 
         while(opModeIsActive()){
 

@@ -13,9 +13,8 @@ public class Crater extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater Autonomous", true, this);
-        int i = 0;
-        while(opModeIsActive() && i == 0) {
+        waitForStart("Crater Autonomous", true);
+        while(opModeIsActive() && !isStopRequested()) {
             //Flip phone up
 
             //Land
@@ -59,9 +58,8 @@ public class Crater extends Team753Linear{
             Robot.getMarker().up();
 
             //Return to Crater
-            i++;
 
+            finalAction();
         }
-        finalAction();
     }
 }

@@ -17,12 +17,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class RevIMU {
     private BNO055IMU imu;
 
+    private float headingOffset;
+
     public RevIMU(String id, HardwareMap hardwareMap){
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
@@ -32,8 +34,8 @@ public class RevIMU {
     }
 
     public double getNormalHeading() {
-        Orientation angles;
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return angles.firstAngle;
+        Orientation heading;
+        heading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return heading.firstAngle;
     }
 }

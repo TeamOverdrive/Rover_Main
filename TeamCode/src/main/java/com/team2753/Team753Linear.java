@@ -63,7 +63,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
     //Init  method
 
-    public void waitForStart(String OpModeName, boolean auto, LinearOpMode linearOpMode){
+    public void waitForStart(String OpModeName, boolean auto){
 
         /*
         dashboardTelemetry.setAutoClear(true);
@@ -80,8 +80,8 @@ public abstract class Team753Linear extends LinearOpMode{
 
         if(auto){
             isAuto = true;
-            //RobotLog.v("================ AutoTransitioner =============");
-            AutoTransitioner.transitionOnStop(linearOpMode, "Teleop"); //Auto Transitioning
+            RobotLog.v("================ AutoTransitioner =============");
+            AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
             initGoldDetector();
 

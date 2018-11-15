@@ -16,7 +16,7 @@ public class Teleop extends Team753Linear{
     @Override
     public void runOpMode(){
 
-        waitForStart("Teleop", false, this);
+        waitForStart("Teleop", false);
 
         while(opModeIsActive()){
 
@@ -83,10 +83,8 @@ public class Teleop extends Team753Linear{
                 Robot.getMarker().deploy();
 
 
-
             updateTelemetry();
         }
-
         finalAction();
     }
 }

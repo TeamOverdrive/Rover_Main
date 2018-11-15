@@ -40,10 +40,10 @@ public class Drive implements Subsystem{
     private DcMotorEx leftFront, leftBack, rightBack, rightFront;
     private List<DcMotorEx> motors;
 
-    private RevIMU imu;
+    private RevIMU imu, imu_1;
 
     /*
-    TODO: Get rr working after Nov 11.
+    TODO: Get roadrunner working after Dec 15 (or thanksgiving?).
     public Drive(double trackWidth, NanoClock clock) {
         super(trackWidth, clock);
     }
@@ -74,6 +74,7 @@ public class Drive implements Subsystem{
 
         if(auto){
             imu = new RevIMU("imu", linearOpMode.hardwareMap);
+            imu_1 = new RevIMU("imu_1", linearOpMode.hardwareMap);
             zeroSensors();
         }
     }
@@ -83,8 +84,6 @@ public class Drive implements Subsystem{
         stop();
         while(getLeftCurrentPosition()!=0 && getRightCurrentPosition()!=0)
             setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //TODO: reset gyro here?
     }
 
     @Override
@@ -95,7 +94,10 @@ public class Drive implements Subsystem{
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-
+        telemetry.addData("Left Power", getLeftPower());
+        telemetry.addData("Right Power", getRightPower());
+        telemetry.addData("Left Pos", getLeftCurrentPosition());
+        telemetry.addData("Right Pos", getRightCurrentPosition());
     }
 
     public void setRunMode(DcMotor.RunMode runMode){
@@ -143,6 +145,16 @@ public class Drive implements Subsystem{
         return position;
     }
 
+    public double getLeftPower(){
+        double power = (leftBack.getPower()+leftFront.getPower())/2;
+        return power;
+    }
+
+    public double getRightPower(){
+        double power = (rightBack.getPower()+rightFront.getPower())/2;
+        return power;
+    }
+
     public double getGyroAngleDegrees() {
         try {
             return (imu.getNormalHeading());
@@ -152,7 +164,16 @@ public class Drive implements Subsystem{
 
     }
 
-    //TODO: Get encoder drive working and add encoder and gyro turns
+    //TODO: add gyro turns
+
+    /**
+     *
+     * @param speed motor speed
+     * @param leftInches how far should the left side run
+     * @param rightInches how far should the right side run
+     * @param timeoutS  timout length
+     * @param linearOpMode this
+     */
 
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS, Team753Linear linearOpMode) {
         int newLeftTarget;

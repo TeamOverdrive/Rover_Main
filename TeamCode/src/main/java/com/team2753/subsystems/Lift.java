@@ -2,6 +2,7 @@ package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.team2753.Team753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -16,7 +17,8 @@ public class Lift implements Subsystem {
 
     //Vars
 
-    private DcMotor leftLift, rightLift = null;
+    private DcMotor leftLift, rightLift;
+    private Servo liftLock;
 
     private static final double brakePower = 0;
 
@@ -30,6 +32,9 @@ public class Lift implements Subsystem {
 
         leftLift.setDirection(FORWARD);
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //TODO: @hardware add lift_lock to hub 1 servo port 1 (or is it 2?) 
+        //liftLock = (Servo) linearOpMode.hardwareMap.get("lift_lock");
     }
 
     @Override
@@ -44,7 +49,8 @@ public class Lift implements Subsystem {
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-
+        telemetry.addData("Lift position", getPosition());
+        telemetry.addData("Lift Power", getPower());
     }
 
     public void setPower(double power){
@@ -67,6 +73,15 @@ public class Lift implements Subsystem {
 
     public int getPosition(){
         int position = ((getLeftPosition()+getRightPosition())/2);
+        return position;
+    }
+
+    public double getLeftPower(){return leftLift.getPower();}
+
+    public double getRightPower(){return rightLift.getPower();}
+
+    public double getPower(){
+        double position = ((getLeftPower()+getRightPower())/2);
         return position;
     }
 }

@@ -10,18 +10,13 @@ import com.team2753.Team753Linear;
 public class Depot_Park extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart("Depot_Park", true, this);
+        waitForStart("Depot_Park", true);
 
-        int i = 0;
-        while (opModeIsActive() && i == 0) {
-
-            Robot.getDrive().encoderDrive(0.8, 40, 40, 10, this);
+        while(opModeIsActive() && !isStopRequested()) {
+            Robot.getDrive().encoderDrive(0.7, 40, 40, 10, this);
             //Team Marker
             Robot.getMarker().deploy();
-            i++;
-
+            finalAction();
         }
-
-        finalAction();
     }
 }

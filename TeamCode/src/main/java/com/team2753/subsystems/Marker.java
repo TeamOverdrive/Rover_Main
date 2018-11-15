@@ -10,25 +10,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Marker implements Subsystem{
 
-    private Servo marker;
-    private double UP = .6;
-    private double DOWN = .2;
-
+    private Servo frontMarker;
+    private double FRONTUP = .6;
+    private double FRONTDOWN = .2;
     @Override
     public void init(Team753Linear linearOpMode, boolean auto) {
-        marker = (Servo) linearOpMode.hardwareMap.get("marker");
-        up();
+        frontMarker = (Servo) linearOpMode.hardwareMap.get("marker");
+        retract();
     }
 
     @Override
-    public void zeroSensors() {
-
-    }
+    public void zeroSensors() {}
 
     @Override
-    public void stop() {
-
-    }
+    public void stop() {}
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
@@ -36,16 +31,16 @@ public class Marker implements Subsystem{
     }
 
     public void setPosition(double position){
-        marker.setPosition(position);
+        frontMarker.setPosition(position);
     }
 
-    public double getPosition(){return marker.getPosition();}
+    public double getPosition(){return frontMarker.getPosition();}
 
-    public void up(){
-        marker.setPosition(UP);
+    public void retract(){
+        setPosition(FRONTUP);
     }
 
     public void deploy(){
-        marker.setPosition(DOWN);
+        setPosition(FRONTDOWN);
     }
 }
