@@ -33,8 +33,12 @@ public class Lift implements Subsystem {
         leftLift.setDirection(FORWARD);
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //TODO: @hardware add lift_lock to hub 1 servo port 1 (or is it 2?) 
+        //TODO: @hardware add lift_lock to hub 1 servo port 1
         //liftLock = (Servo) linearOpMode.hardwareMap.get("lift_lock");
+
+        //TODO: add limit switch (maybe rev magnetic switch?)
+
+        //TODO: add a rev distance sensor (should get v2? we already have v1)
     }
 
     @Override
