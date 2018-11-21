@@ -18,6 +18,9 @@ public class Intake implements Subsystem {
     @Override
     public void init(Team753Linear linearOpMode, boolean auto) {
 
+        //TODO: add intake motors
+        //TODO: add rev touch sensor
+
     }
 
     @Override

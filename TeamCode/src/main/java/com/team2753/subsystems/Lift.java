@@ -33,17 +33,25 @@ public class Lift implements Subsystem {
         leftLift.setDirection(FORWARD);
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         //TODO: @hardware add lift_lock to hub 1 servo port 1
         //liftLock = (Servo) linearOpMode.hardwareMap.get("lift_lock");
 
         //TODO: add limit switch (maybe rev magnetic switch?)
 
-        //TODO: add a rev distance sensor (should get v2? we already have v1)
+        //TODO: add a rev distance sensor
+
+        if(auto){
+            zeroSensors();
+        }
     }
 
     @Override
     public void zeroSensors() {
         stop();
+        while(getLeftPosition()!=0 && getRightPosition()!=0)
+            setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class Lift implements Subsystem {
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-        telemetry.addData("Lift position", getPosition());
+        telemetry.addData("Lift position", getAveragePosition());
         telemetry.addData("Lift Power", getPower());
     }
 
@@ -75,7 +83,7 @@ public class Lift implements Subsystem {
 
     public int getRightPosition(){return rightLift.getCurrentPosition();}
 
-    public int getPosition(){
+    public int getAveragePosition(){
         int position = ((getLeftPosition()+getRightPosition())/2);
         return position;
     }
@@ -85,7 +93,12 @@ public class Lift implements Subsystem {
     public double getRightPower(){return rightLift.getPower();}
 
     public double getPower(){
-        double position = ((getLeftPower()+getRightPower())/2);
-        return position;
+        double power = ((getLeftPower()+getRightPower())/2);
+        return power;
+    }
+
+    public void setRunMode(DcMotor.RunMode runMode){
+        rightLift.setMode(runMode);
+        leftLift.setMode(runMode);
     }
 }

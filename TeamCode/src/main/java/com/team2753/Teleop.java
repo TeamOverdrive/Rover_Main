@@ -78,7 +78,7 @@ public class Teleop extends Team753Linear{
             Robot.getLift().setPower(liftThrottle);
 
             if(gamepad1.right_bumper)
-                Robot.getMarker().up();
+                Robot.getMarker().retract();
             if(gamepad1.left_bumper)
                 Robot.getMarker().deploy();
 

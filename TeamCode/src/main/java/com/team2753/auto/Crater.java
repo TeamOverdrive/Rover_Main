@@ -55,7 +55,7 @@ public class Crater extends Team753Linear{
             Robot.getDrive().encoderDrive(0.8, 30, 30, 8, this);
 
             //Deposit Team Marker
-            Robot.getMarker().up();
+            Robot.getMarker().retract();
 
             //Return to Crater
 
