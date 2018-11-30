@@ -4,13 +4,14 @@ import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team2753.Team753Linear;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 11/6/2018.
  */
 
-@Autonomous
+@TeleOp
 public class MineralSampleTest extends Team753Linear{
 
     @Override

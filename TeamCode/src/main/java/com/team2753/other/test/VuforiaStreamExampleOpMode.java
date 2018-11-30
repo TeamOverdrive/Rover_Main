@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.vuforia.Image;
@@ -18,6 +19,7 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.BlockingQueue;
 
 @TeleOp
+@Disabled
 @Config
 public class VuforiaStreamExampleOpMode extends LinearOpMode {
 

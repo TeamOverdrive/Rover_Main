@@ -17,8 +17,11 @@ public class Lift implements Subsystem {
 
     //Vars
 
-    private DcMotor leftLift, rightLift;
+    public DcMotor leftLift, rightLift;
     private Servo liftLock;
+
+    private double lockPosition = 0.2;
+    private double unlockPosition = 0.75;
 
     private static final double brakePower = 0;
 
@@ -35,13 +38,13 @@ public class Lift implements Subsystem {
 
         setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //TODO: @hardware add lift_lock to hub 1 servo port 1
-        //liftLock = (Servo) linearOpMode.hardwareMap.get("lift_lock");
+        liftLock = (Servo) linearOpMode.hardwareMap.get("lift_lock");
 
         //TODO: add limit switch (maybe rev magnetic switch?)
 
         //TODO: add a rev distance sensor
 
+        lock();
         if(auto){
             zeroSensors();
         }
@@ -101,4 +104,41 @@ public class Lift implements Subsystem {
         rightLift.setMode(runMode);
         leftLift.setMode(runMode);
     }
+
+    public void setTarget(int target){
+        rightLift.setTargetPosition(target);
+        leftLift.setTargetPosition(target);
+    }
+
+    public boolean getLiftBusy(){
+        if(leftLift.isBusy() || rightLift.isBusy())
+            return true;
+        else
+            return false;
+    }
+
+    public void runToPosition(int target){
+        setTarget(target);
+        if (leftLift.getMode() != DcMotor.RunMode.RUN_TO_POSITION || rightLift.getMode() != DcMotor.RunMode.RUN_TO_POSITION){
+            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        setPower(1);
+    }
+
+    public void fullUp(){
+        setTarget(3800);
+    }
+
+    public void lockSetPosition(double position){
+        liftLock.setPosition(position);
+    }
+
+    public void unlock(){
+        lockSetPosition(unlockPosition);
+    }
+
+    public void lock(){
+        lockSetPosition(lockPosition);
+    }
+
 }
