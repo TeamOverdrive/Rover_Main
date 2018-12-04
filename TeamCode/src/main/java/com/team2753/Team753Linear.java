@@ -30,6 +30,8 @@ public abstract class Team753Linear extends LinearOpMode{
 
     private GoldAlignDetector detector;
 
+
+
     /*
     private Bitmap bm = null;
     private int redVotes = 0;
@@ -83,7 +85,7 @@ public abstract class Team753Linear extends LinearOpMode{
             RobotLog.v("================ AutoTransitioner =============");
             AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
-            initGoldDetector();
+            //initGoldDetector();
 
             //Relic Recovery Vuforia Jewel Detection removed. refer to Relic_Main for code
 
@@ -91,6 +93,10 @@ public abstract class Team753Linear extends LinearOpMode{
 
         }
         SetStatus("Initialized, Waiting for Start");
+        //for now i have a loop to keep pinging the phone so it doesn't switch to teleop
+        while(!isStarted() && !isStopRequested()){
+            telemetry.update();
+        }
         waitForStart();
         runtime.reset();
         SetStatus("Running OpMode");
@@ -128,8 +134,6 @@ public abstract class Team753Linear extends LinearOpMode{
     }
 
     public void finalAction() {
-        if(isAuto)
-            detector.disable();
         Robot.stop();
         requestOpModeStop();
     }

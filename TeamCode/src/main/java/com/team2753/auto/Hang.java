@@ -5,16 +5,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.team2753.Team753Linear;
 
 /**
- * Created by David Zheng | FTC 2753 Team Overdrive on 11/11/2018.
+ * Created by David Zheng | FTC 2753 Team Overdrive on 12/3/2018.
  */
 
-@Autonomous(name = "Crater_Park")
-public class Crater_Park extends Team753Linear {
+@Autonomous(name = "Land Only")
+public class Hang extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater_Park", true);
+        waitForStart("Crater Autonomous", true);
         while(opModeIsActive() && !isStopRequested()) {
+
+            //A Land only autonomous
 
             Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
             Robot.getLift().setTarget(0);
@@ -31,7 +33,7 @@ public class Crater_Park extends Team753Linear {
             Robot.getLift().setPower(-0.75);
             while(Robot.getLift().getAveragePosition() >= 100){}
             Robot.getLift().setPower(0);
-            Robot.getDrive().encoderDrive(0.75, 25, 25, 10, this);
+
 
             finalAction();
         }

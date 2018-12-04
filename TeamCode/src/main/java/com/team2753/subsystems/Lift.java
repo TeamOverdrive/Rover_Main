@@ -20,8 +20,8 @@ public class Lift implements Subsystem {
     public DcMotor leftLift, rightLift;
     private Servo liftLock;
 
-    private double lockPosition = 0.2;
-    private double unlockPosition = 0.75;
+    private double lockPosition = 0.75;
+    private double unlockPosition = 0.2;
 
     private static final double brakePower = 0;
 
@@ -44,8 +44,12 @@ public class Lift implements Subsystem {
 
         //TODO: add a rev distance sensor
 
-        lock();
+        unlock();
         if(auto){
+            setPower(-0.6);
+            threadSleep(500);
+            setPower(0);
+            lock();
             zeroSensors();
         }
     }
@@ -139,6 +143,14 @@ public class Lift implements Subsystem {
 
     public void lock(){
         lockSetPosition(lockPosition);
+    }
+
+    private void threadSleep(long milliseconds){
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
