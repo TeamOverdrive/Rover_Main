@@ -254,8 +254,8 @@ public class Drive implements Subsystem{
 
     public void encoderTurn(double degrees, double speed, double timeoutS, Team753Linear linearOpMode){
 
-        double leftDistance = (WHEEL_BASE*PI*degrees)/360;
-        double rightDistance = (WHEEL_BASE*PI*degrees)/-360;
+        double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
+        double rightDistance = (WHEEL_BASE*PI*degrees)/360;
 
         encoderDrive(speed, leftDistance, rightDistance, timeoutS, linearOpMode);
 

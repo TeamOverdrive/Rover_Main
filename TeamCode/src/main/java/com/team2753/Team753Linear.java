@@ -157,7 +157,9 @@ public abstract class Team753Linear extends LinearOpMode{
 
         detector.ratioScorer.weight = 5;
         detector.ratioScorer.perfectRatio = 1.0;
+    }
 
+    public void enableDetector(){
         detector.enable();
     }
 
