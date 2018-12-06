@@ -135,6 +135,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
     public void finalAction() {
         Robot.stop();
+        threadSleep(10);
         requestOpModeStop();
     }
 

@@ -33,9 +33,9 @@ public class Teleop extends Team753Linear{
                 } else if (gamepad1.dpad_down) {
                     Robot.getDrive().setLeftRightPower(-0.3, -0.3);
                 } else if (gamepad1.dpad_left) {
-                    Robot.getDrive().setLeftRightPower(-0.35, 0.35);
-                } else if (gamepad1.dpad_right) {
                     Robot.getDrive().setLeftRightPower(0.35, -0.35);
+                } else if (gamepad1.dpad_right) {
+                    Robot.getDrive().setLeftRightPower(-0.35, 0.35);
                 } else {
                     Robot.getDrive().setLeftRightPower(0, 0);
                 }

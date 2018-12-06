@@ -15,7 +15,6 @@ public class Crater extends Team753Linear{
     public void runOpMode() throws InterruptedException {
 
         waitForStart("Crater Autonomous", true);
-        //while(opModeIsActive() && !isStopRequested()) {
 
             //Flip phone
 
@@ -24,17 +23,18 @@ public class Crater extends Team753Linear{
             //Land
             Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
             Robot.getLift().setTarget(0);
-            Robot.getLift().setPower(-0.25);
+            Robot.getLift().setPower(-0.5);
             while(Robot.getLift().getAveragePosition() >= 75){}
             Robot.getLift().unlock();
             Robot.getLift().setPower(0);
             Robot.getLift().setTarget(3800);
+            while(Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
             Robot.getLift().setPower(1);
             while(Robot.getLift().getAveragePosition() <= 3700){}
             Robot.getLift().setPower(0);
 
             //Forward 6 inches
-            Robot.getDrive().encoderDrive(0.5, 12, 12, 4, this);
+            Robot.getDrive().encoderDrive(0.5, 16, 16, 4, this);
 
             //Lower lift
             Robot.getLift().setTarget(0);
@@ -51,19 +51,17 @@ public class Crater extends Team753Linear{
             */
 
             //Drive to Crater
-            Robot.getDrive().encoderTurn(-90, .75, 5, this);
-            Robot.getDrive().encoderDrive(.9, -50, -50, 10, this);
+            Robot.getDrive().encoderTurn(-90, .6, 5, this);
+            Robot.getDrive().encoderDrive(.9, -52, -52, 10, this);
             Robot.getDrive().encoderTurn(45, .75, 5, this);
-            Robot.getDrive().encoderDrive(0.9, -40, -40, 10, this);
+            Robot.getDrive().encoderDrive(0.9, -38, -38, 10, this);
 
             //Deposit Team Marker
-            Robot.getMarker().retract();
+            Robot.getMarker().deploy();
 
             //Return to Crater
-            //78
-            Robot.getDrive().encoderDrive(1, 78, 78, 10, this);
+            Robot.getDrive().encoderDrive(1, 72, 72, 10, this);
 
             finalAction();
-        //}
     }
 }

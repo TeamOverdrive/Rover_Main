@@ -16,8 +16,6 @@ public class Depot extends Team753Linear{
 
         waitForStart("Crater Autonomous", true);
 
-        while (opModeIsActive() && !isStopRequested()) {
-
             //Flip phone
 
             //Deploy intake
@@ -25,17 +23,18 @@ public class Depot extends Team753Linear{
             //Land
             Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
             Robot.getLift().setTarget(0);
-            Robot.getLift().setPower(-0.25);
+            Robot.getLift().setPower(-0.5);
             while(Robot.getLift().getAveragePosition() >= 75){}
             Robot.getLift().unlock();
             Robot.getLift().setPower(0);
             Robot.getLift().setTarget(3800);
+            while(Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
             Robot.getLift().setPower(1);
             while(Robot.getLift().getAveragePosition() <= 3700){}
             Robot.getLift().setPower(0);
 
             //Forward 6 inches
-            Robot.getDrive().encoderDrive(0.5, 6, 6, 4, this);
+            Robot.getDrive().encoderDrive(0.5, 14, 14, 4, this);
 
             //Lower lift
             Robot.getLift().setTarget(0);
@@ -71,12 +70,17 @@ public class Depot extends Team753Linear{
             Robot.getDrive().encoderDrive(0.8, 30, 30, 8, this);
             */
 
+            //Drive into depot
+            Robot.getDrive().encoderDrive(0.8, 45, 45, 8, this);
+            Robot.getDrive().encoderTurn(135, 0.5, 5, this);
+
+
             //Deposit Team Marker
             Robot.getMarker().deploy();
 
             //Drive to Crater
+            Robot.getDrive().encoderDrive(0.8, 70, 70, 10, this);
 
             finalAction();
-        }
     }
 }

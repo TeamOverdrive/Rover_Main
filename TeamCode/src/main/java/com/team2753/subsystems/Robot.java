@@ -57,10 +57,10 @@ public class Robot {
      * Stop all subsystems with this method.
      */
     public void stop() {
-        try {
+        //try {
             for (Subsystem subsystem:subsystems)
                 subsystem.stop();
-        } catch (Exception e){}
+        //} catch (Exception e){}
     }
 
 

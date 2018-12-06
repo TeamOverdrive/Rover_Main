@@ -17,11 +17,11 @@ public class Lift implements Subsystem {
 
     //Vars
 
-    public DcMotor leftLift, rightLift;
+    private DcMotor leftLift, rightLift;
     private Servo liftLock;
 
-    private double lockPosition = 0.75;
-    private double unlockPosition = 0.2;
+    public double lockPosition = 0.8;
+    public double unlockPosition = 0.2;
 
     private static final double brakePower = 0;
 
@@ -50,6 +50,7 @@ public class Lift implements Subsystem {
             threadSleep(500);
             setPower(0);
             lock();
+            threadSleep(100);
             zeroSensors();
         }
     }
@@ -143,6 +144,11 @@ public class Lift implements Subsystem {
 
     public void lock(){
         lockSetPosition(lockPosition);
+    }
+
+    public double getLockPosition(){
+        double position = liftLock.getPosition();
+        return position;
     }
 
     private void threadSleep(long milliseconds){
