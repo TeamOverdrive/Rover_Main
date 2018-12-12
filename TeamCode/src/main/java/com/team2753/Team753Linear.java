@@ -85,7 +85,7 @@ public abstract class Team753Linear extends LinearOpMode{
             RobotLog.v("================ AutoTransitioner =============");
             AutoTransitioner.transitionOnStop(this, "Teleop"); //Auto Transitioning
 
-            //initGoldDetector();
+            initGoldDetector();
 
             //Relic Recovery Vuforia Jewel Detection removed. refer to Relic_Main for code
 
@@ -137,6 +137,8 @@ public abstract class Team753Linear extends LinearOpMode{
         Robot.stop();
         threadSleep(10);
         requestOpModeStop();
+        if(isAuto)
+            detector.disable();
     }
 
     public void initGoldDetector(){
@@ -171,24 +173,11 @@ public abstract class Team753Linear extends LinearOpMode{
     public boolean goldAligned(){return detector.getAligned();}
 
     public void sampleGoldMineral(){
-
-        int invisibleCounter = 0;
+        Robot.getDrive().encoderDrive(0.5, -18, -18, 6, this);
+        Robot.getDrive().zeroSensors();
         while(!goldAligned()){
-            if(!goldVisible()){
-                invisibleCounter++;
-                telemetry.addData("Invisiblity Count", invisibleCounter);
-            }
-            else if(!goldAligned()&&getGoldPos()>300){
-                //turn to the right
-                telemetry.addData("Turning", "Right");
-            }
-            else if (!goldAligned()&&getGoldPos()<300){
-                //turn to the left
-                telemetry.addData("Turning", "Left");
-            }
+
         }
-        //should now be aligned
-        telemetry.addLine("Gold Aligned!!!");
     }
 
     private int vi = 0;
@@ -219,6 +208,24 @@ public abstract class Team753Linear extends LinearOpMode{
 
     public void threadSleep(long periodMs) {
         long remaining = periodMs - (long) runtime.milliseconds();
+
+        // sleep for the remaining portion of the regular cycle period.
+        if (remaining > 0) {
+            try {
+                Thread.sleep(remaining);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // Reset the cycle clock for the next pass.
+        runtime.reset();
+    }
+
+    public void waitForTick(long periodMs) {
+        long remaining = periodMs - (long) runtime.milliseconds();
+
+        runtime.reset();
 
         // sleep for the remaining portion of the regular cycle period.
         if (remaining > 0) {

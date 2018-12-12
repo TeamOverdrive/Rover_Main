@@ -25,15 +25,21 @@ public class Depot_Park extends Team753Linear{
             Robot.getLift().setTarget(3800);
         while(Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
             Robot.getLift().setPower(1);
-            while(Robot.getLift().getAveragePosition() <= 3700){}
+        while(Robot.getLift().getAveragePosition() <= 3600){}
             Robot.getLift().setPower(0);
             Robot.getDrive().encoderDrive(0.5, 6, 6, 4, this);
             Robot.getLift().setTarget(0);
             Robot.getLift().setPower(-0.75);
             while(Robot.getLift().getAveragePosition() >= 100){}
             Robot.getLift().setPower(0);
-            Robot.getDrive().encoderDrive(0.75, 36, 36, 10, this);
-            Robot.getMarker().deploy();
+            Robot.getDrive().encoderDrive(0.75, 60, 60, 10, this);
+            Robot.getDrive().encoderTurn(-45, 0.6, 5, this);
+            //Robot.getMarker().deploy();
+        Robot.getIntake().setIntakePower(-0.5);
+        //threadSleep(2000);
+        waitForTick(2000);
+        Robot.getIntake().setIntakePower(0);
+            Robot.getDrive().encoderDrive(0.8, -72, -72, 8, this);
             finalAction();
         //}
     }

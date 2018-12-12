@@ -84,6 +84,7 @@ public class Drive implements Subsystem{
         stop();
         while(getLeftCurrentPosition()!=0 && getRightCurrentPosition()!=0)
             setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override

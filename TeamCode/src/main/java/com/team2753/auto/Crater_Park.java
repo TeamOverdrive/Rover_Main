@@ -27,7 +27,7 @@ public class Crater_Park extends Team753Linear {
             Robot.getLift().setTarget(3800);
             while(Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
             Robot.getLift().setPower(1);
-            while(Robot.getLift().getAveragePosition() <= 3700){}
+        while(Robot.getLift().getAveragePosition() <= 3600){}
             Robot.getLift().setPower(0);
             Robot.getDrive().encoderDrive(0.5, 6, 6, 4, this);
             Robot.getLift().setTarget(0);

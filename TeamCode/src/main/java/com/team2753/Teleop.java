@@ -60,6 +60,13 @@ public class Teleop extends Team753Linear{
                 Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
             }
 
+            if(gamepad1.left_bumper)
+                Robot.getIntake().setIntakePower(-1);
+            else if(gamepad1.right_bumper)
+                Robot.getIntake().setIntakePower(1);
+            else
+                Robot.getIntake().setIntakePower(0);
+
 
 
             /*------       Gamepad 2 Controls       ------*/
@@ -67,7 +74,7 @@ public class Teleop extends Team753Linear{
             /*Lift Controls*/
             //Right joystick up/down to raise/lower lift
 
-            float liftThrottle = gamepad2.right_stick_y;
+            float liftThrottle = gamepad2.left_stick_y;
             //Clip
             liftThrottle = Range.clip(liftThrottle, -1, 1);
             //Scale

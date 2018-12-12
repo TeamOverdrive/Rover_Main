@@ -36,7 +36,7 @@ public class Lift implements Subsystem {
         leftLift.setDirection(FORWARD);
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         liftLock = (Servo) linearOpMode.hardwareMap.get("lift_lock");
 
@@ -52,6 +52,7 @@ public class Lift implements Subsystem {
             lock();
             threadSleep(100);
             zeroSensors();
+            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
 

@@ -2,6 +2,7 @@ package com.team2753.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.team2753.Team753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -18,6 +19,11 @@ public class Intake implements Subsystem {
     @Override
     public void init(Team753Linear linearOpMode, boolean auto) {
 
+        intakeMotor = (DcMotor) linearOpMode.hardwareMap.get("intake");
+        slideMotor = (DcMotor) linearOpMode.hardwareMap.get("slide");
+
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
         //TODO: add intake motors
         //TODO: add rev touch sensor
 
@@ -30,11 +36,16 @@ public class Intake implements Subsystem {
 
     @Override
     public void stop() {
-
+        intakeMotor.setPower(0);
+        slideMotor.setPower(0);
     }
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
 
+    }
+
+    public void setIntakePower(double power){
+        intakeMotor.setPower(power);
     }
 }

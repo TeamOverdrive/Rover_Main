@@ -1,6 +1,7 @@
 package com.team2753.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.team2753.Team753Linear;
 
@@ -9,6 +10,7 @@ import com.team2753.Team753Linear;
  */
 
 @Autonomous(name = "Land Only", group = "0_auto")
+//@Disabled
 public class Hang extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,7 +29,7 @@ public class Hang extends Team753Linear{
         Robot.getLift().setTarget(3800);
         while(Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
         Robot.getLift().setPower(1);
-        while(Robot.getLift().getAveragePosition() <= 3700){}
+        while(Robot.getLift().getAveragePosition() <= 3600){}
         Robot.getLift().setPower(0);
 
         //Forward 6 inches
