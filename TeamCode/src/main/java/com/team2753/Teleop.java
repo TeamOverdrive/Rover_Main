@@ -16,6 +16,7 @@ public class Teleop extends Team753Linear{
     @Override
     public void runOpMode(){
 
+        boolean liftOverride = true;
         waitForStart("Teleop", false);
 
         while(opModeIsActive()){
@@ -72,17 +73,39 @@ public class Teleop extends Team753Linear{
             /*------       Gamepad 2 Controls       ------*/
 
             /*Lift Controls*/
-            //Right joystick up/down to raise/lower lift
 
-            float liftThrottle = gamepad2.left_stick_y;
-            //Clip
-            liftThrottle = Range.clip(liftThrottle, -1, 1);
-            //Scale
-            liftThrottle = (float) scaleInput(liftThrottle);
-            //Invert
-            liftThrottle = liftThrottle * -1;
-            //Apply power to motor
-            Robot.getLift().setPower(liftThrottle);
+
+            if(Math.abs(gamepad2.left_stick_y)<= 0.05){
+
+
+                if (gamepad2.dpad_up) {
+                    Robot.getLift().setPower(0.45);
+                } else if (gamepad2.dpad_down) {
+                    Robot.getLift().setPower(-0.2);
+                } else {
+                    Robot.getLift().setPower(0);
+                    liftOverride = false;
+                }
+
+                if(!liftOverride){
+                    //autostuff
+                }
+            }
+            else{
+                liftOverride = true;
+                float liftThrottle = gamepad2.left_stick_y;
+                //Clip
+                liftThrottle = Range.clip(liftThrottle, -1, 1);
+                //Scale
+                liftThrottle = (float) scaleInput(liftThrottle);
+                //Invert
+                liftThrottle = liftThrottle * -1;
+                //Apply power to motor
+
+                if(Robot.getLift().getLockPosition() == Robot.getLift().unlockPosition) {
+                    Robot.getLift().setPower(liftThrottle);
+                }
+            }
 
             if(gamepad2.right_bumper)
                 Robot.getLift().lock();

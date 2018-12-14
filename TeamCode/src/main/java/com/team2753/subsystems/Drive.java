@@ -206,13 +206,19 @@ public class Drive implements Subsystem{
                 if ((Math.abs(newLeftTarget - getLeftCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
                         && (Math.abs(newRightTarget - getRightCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
                         && speed > 0.1) {
+
                     setLeftRightPower(Math.abs(speed * 0.75), Math.abs(speed * 0.75));
                 }
                 //slow the motors down to 0.35 of the original speed when we get within 2 inches of our target and the speed is greater than 0.1.
                 if ((Math.abs(newLeftTarget - getLeftCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
                         && (Math.abs(newRightTarget - getRightCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
                         && speed > 0.1) {
-                    setLeftRightPower(Math.abs(speed * 0.3), Math.abs(speed * 0.3));
+                    if(Math.abs(speed*0.3)>0.2) {
+                        setLeftRightPower(Math.abs(speed * 0.3), Math.abs(speed * 0.3));
+                    }
+                    else{
+                        setLeftRightPower(0.2, 0.2);
+                    }
                 }
             }
             // Stop all motion;

@@ -30,12 +30,12 @@ public class MineralSampleTest extends Team753Linear{
         Robot.getDrive().zeroSensors();
         threadSleep(500);
 
-        while(!goldAligned() && getGoldPos() < 300){
+        while(opModeIsActive() && !goldAligned() && getGoldPos() < 300){
             Robot.getDrive().setLeftRightPower(0.35, 0.35);
         }
 
-        double leftPos = Math.abs(Robot.getDrive().getLeftCurrentPosition() * COUNTS_PER_INCH);
-        double rightPos = Math.abs(Robot.getDrive().getRightCurrentPosition() * COUNTS_PER_INCH);
+        double leftPos = Math.abs(Robot.getDrive().getLeftCurrentPosition() * (1/COUNTS_PER_INCH));
+        double rightPos = Math.abs(Robot.getDrive().getRightCurrentPosition() * (1/COUNTS_PER_INCH));
 
         telemetry.addData("Distance Travled", ((leftPos+rightPos)/2));
         telemetry.update();
@@ -45,12 +45,12 @@ public class MineralSampleTest extends Team753Linear{
         Robot.getDrive().encoderDrive(0.75, -18, -12, 5, this);
         Robot.getDrive().encoderTurn(90, 0.75, 4, this);
 
-        /*
+
         double distanceRemaining = 78 - ((leftPos+rightPos)/2);
 
 
         Robot.getDrive().encoderDrive(0.75, distanceRemaining, distanceRemaining, 8, this);
-        */
+
 
         finalAction();
     }

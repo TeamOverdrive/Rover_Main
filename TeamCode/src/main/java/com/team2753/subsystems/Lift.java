@@ -1,5 +1,6 @@
 package com.team2753.subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -72,6 +73,7 @@ public class Lift implements Subsystem {
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Lift position", getAveragePosition());
         telemetry.addData("Lift Power", getPower());
+        telemetry.addData("Lock Position", getLockPosition());
     }
 
     public void setPower(double power){
@@ -123,6 +125,8 @@ public class Lift implements Subsystem {
             return false;
     }
 
+    /*
+    @Deprecated
     public void runToPosition(int target){
         setTarget(target);
         if (leftLift.getMode() != DcMotor.RunMode.RUN_TO_POSITION || rightLift.getMode() != DcMotor.RunMode.RUN_TO_POSITION){
@@ -131,9 +135,11 @@ public class Lift implements Subsystem {
         setPower(1);
     }
 
+    @Deprecated
     public void fullUp(){
         setTarget(3800);
     }
+    */
 
     public void lockSetPosition(double position){
         liftLock.setPosition(position);
@@ -150,6 +156,13 @@ public class Lift implements Subsystem {
     public double getLockPosition(){
         double position = liftLock.getPosition();
         return position;
+    }
+
+    public boolean shouldLiftStop(){
+        if(getAveragePosition()>=25){
+            return true;
+        }
+        else return false;
     }
 
     private void threadSleep(long milliseconds){

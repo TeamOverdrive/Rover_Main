@@ -53,7 +53,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
     protected Gold_Position goldPosition  = null;
 
-    protected static ElapsedTime runtime = new ElapsedTime();
+    private static ElapsedTime runtime = new ElapsedTime();
     private boolean isAuto = false;
 
     /*
@@ -221,23 +221,4 @@ public abstract class Team753Linear extends LinearOpMode{
         // Reset the cycle clock for the next pass.
         runtime.reset();
     }
-
-    public void waitForTick(long periodMs) {
-        long remaining = periodMs - (long) runtime.milliseconds();
-
-        runtime.reset();
-
-        // sleep for the remaining portion of the regular cycle period.
-        if (remaining > 0) {
-            try {
-                Thread.sleep(remaining);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-
-        // Reset the cycle clock for the next pass.
-        runtime.reset();
-    }
-
 }
