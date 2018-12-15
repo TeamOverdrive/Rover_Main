@@ -13,10 +13,12 @@ import static com.team2753.libs.MathUtil.scaleInput;
 @TeleOp(name = "Teleop", group = "0_Main")
 public class Teleop extends Team753Linear{
 
+    boolean liftOverride = true;
+    private double angle  = 0;
+
     @Override
     public void runOpMode(){
 
-        boolean liftOverride = true;
         waitForStart("Teleop", false);
 
         while(opModeIsActive()){
@@ -68,6 +70,15 @@ public class Teleop extends Team753Linear{
             else
                 Robot.getIntake().setIntakePower(0);
 
+            if(gamepad1.left_trigger >= 0.1){
+                Robot.getIntake().setSlidePower(1);
+            }
+            else if(gamepad1.right_trigger >= 0.1){
+                Robot.getIntake().setSlidePower(-1);
+            }
+            else
+                Robot.getIntake().setSlidePower(0);
+
 
 
             /*------       Gamepad 2 Controls       ------*/
@@ -102,10 +113,12 @@ public class Teleop extends Team753Linear{
                 liftThrottle = liftThrottle * -1;
                 //Apply power to motor
 
-                if(Robot.getLift().getLockPosition() == Robot.getLift().unlockPosition) {
+                if(Robot.getLift().isLocked()) {
                     Robot.getLift().setPower(liftThrottle);
                 }
             }
+
+
 
             if(gamepad2.right_bumper)
                 Robot.getLift().lock();
@@ -116,6 +129,14 @@ public class Teleop extends Team753Linear{
                 Robot.getMarker().retract();
             if(gamepad1.left_bumper)
                 Robot.getMarker().deploy();
+
+            if(gamepad2.a){
+                angle -= 0.05;
+            } else if (gamepad2.y) {
+                angle += 0.05;
+            }
+
+            Robot.getIntake().setGatePosition(angle);
 
 
             updateTelemetry();

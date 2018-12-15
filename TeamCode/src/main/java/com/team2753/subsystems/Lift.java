@@ -158,6 +158,10 @@ public class Lift implements Subsystem {
         return position;
     }
 
+    public boolean isLocked(){
+        return getLockPosition() == lockPosition;
+    }
+
     public boolean shouldLiftStop(){
         if(getAveragePosition()>=25){
             return true;
