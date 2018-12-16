@@ -7,16 +7,15 @@ import com.team2753.Team753Linear;
 import static com.team2753.Constants.COUNTS_PER_INCH;
 
 /**
- * Created by David Zheng | FTC 2753 Team Overdrive on 11/3/2018.
+ * Created by David Zheng | FTC 2753 Team Overdrive on 12/15/2018.
  */
 
-@Autonomous(name = "Crater Auto", group = "0_auto")
-//@Disabled
-public class Crater extends Team753Linear{
+@Autonomous(name = "Crater_Sample")
+public class Crater_Sample extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater Autonomous", true);
+        waitForStart("Crater Sample", true);
 
         //Flip phone
 
@@ -44,22 +43,47 @@ public class Crater extends Team753Linear{
         Robot.getLift().setPower(0);
 
         //Drive Forward
-        Robot.getDrive().encoderDrive(0.5, 16, 16, 4, this);
+        Robot.getDrive().encoderDrive(0.5, 14, 14, 4, this);
 
         //Lower lift
 
         //Sample
-        /*
-        double totalDistance = 78;
-
-        Robot.getDrive().encoderTurn(90, 0.75, 6, this);
-        Robot.getDrive().encoderDrive(0.7, -24, -24, 5, this);
+        Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+        Robot.getDrive().encoderDrive(0.7, -20, -20, 5, this);
         enableDetector();
-        Robot.getDrive().zeroSensors();
-        threadSleep(500);
+        Robot.getDrive().encoderDrive(0.35, 4, 4, 2, this);
 
-        while(opModeIsActive() && !goldAligned() && getGoldPos() < 300){
-            Robot.getDrive().setLeftRightPower(0.35, 0.35);
+        if(goldAligned()){
+            Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
+            Robot.getDrive().encoderDrive(0.75, 18, 18, 5, this);
+            Robot.getDrive().encoderDrive(0.75, -18, -18, 5, this);
+            Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+            //drive to wall
+            Robot.getDrive().encoderDrive(0.75, 78, 78, 4, this);
+        }
+        else {
+            Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
+
+            if (goldAligned()) {
+                Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
+                Robot.getDrive().encoderDrive(0.75, 18, 18, 5, this);
+                Robot.getDrive().encoderDrive(0.75, -18, -18, 5, this);
+                Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+                //drive to wall
+                Robot.getDrive().encoderDrive(0.6, 62, 62, 4, this);
+            }
+            else {
+                Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
+
+                if (goldAligned()) {
+                    Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
+                    Robot.getDrive().encoderDrive(0.75, 18, 18, 5, this);
+                    Robot.getDrive().encoderDrive(0.75, -18, -18, 5, this);
+                    Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+                }
+                //drive to wall
+                Robot.getDrive().encoderDrive(0.6, 46, 46, 3, this);
+            }
         }
 
         double leftPos = Math.abs(Robot.getDrive().getLeftCurrentPosition() * (1/COUNTS_PER_INCH));
@@ -68,17 +92,14 @@ public class Crater extends Team753Linear{
         telemetry.addData("Distance Travled", ((leftPos+rightPos)/2));
         telemetry.update();
 
-        Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
-        Robot.getDrive().encoderDrive(0.75, 18, 12, 5, this);
-        Robot.getDrive().encoderDrive(0.75, -18, -12, 5, this);
-        Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+
 
 
         double distanceRemaining = 76 - ((leftPos+rightPos)/2);
 
 
         Robot.getDrive().encoderDrive(0.75, distanceRemaining, distanceRemaining, 4, this);
-        */
+
 
         //Drive to Depot
         Robot.getDrive().encoderTurn(90, .6, 4, this);

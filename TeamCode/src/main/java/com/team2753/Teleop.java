@@ -92,7 +92,7 @@ public class Teleop extends Team753Linear{
                 if (gamepad2.dpad_up) {
                     Robot.getLift().setPower(0.45);
                 } else if (gamepad2.dpad_down) {
-                    Robot.getLift().setPower(-0.2);
+                    Robot.getLift().setPower(-0.6);
                 } else {
                     Robot.getLift().setPower(0);
                     liftOverride = false;

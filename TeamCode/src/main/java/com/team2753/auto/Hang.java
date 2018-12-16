@@ -10,7 +10,7 @@ import com.team2753.Team753Linear;
  */
 
 @Autonomous(name = "Land Only", group = "0_auto")
-@Disabled
+//@Disabled
 public class Hang extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,14 +24,17 @@ public class Hang extends Team753Linear{
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.getLift().setTarget(0);
         Robot.getLift().setPower(-0.5);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 75){
+        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 150){
+            /*
             if(opModeIsActive() &&
                     Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition &&
                     Robot.getLift().getAveragePosition()<= 200){
                 Robot.getLift().unlock();
             }
+            */
         }
-        Robot.getLift().setPower(0);
+        Robot.getLift().setPower(-0.15);
+        Robot.getLift().unlock();
         Robot.getLift().setTarget(3800);
         while(opModeIsActive() && Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
         Robot.getLift().setPower(1);

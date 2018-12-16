@@ -15,7 +15,7 @@ import static com.team2753.Constants.COUNTS_PER_INCH;
  */
 
 @Autonomous
-//@Disabled
+@Disabled
 public class MineralSampleTest extends Team753Linear{
 
     @Override
