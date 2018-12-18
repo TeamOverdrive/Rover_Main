@@ -20,28 +20,18 @@ public class Hang extends Team753Linear{
         //A Land only autonomous
 
         //Land
-        //Land
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.getLift().setTarget(0);
         Robot.getLift().setPower(-0.5);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 150){
-            /*
-            if(opModeIsActive() &&
-                    Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition &&
-                    Robot.getLift().getAveragePosition()<= 200){
-                Robot.getLift().unlock();
-            }
-            */
-        }
-        Robot.getLift().setPower(-0.15);
         Robot.getLift().unlock();
+        while(Robot.getLift().getAveragePosition() >= 25){}
+        Robot.getLift().setPower(0);
         Robot.getLift().setTarget(3800);
-        while(opModeIsActive() && Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
         Robot.getLift().setPower(1);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3600){}
+        while(Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
 
-        //Forward 6 inches
+        //Drive Forward
         Robot.getDrive().encoderDrive(0.5, 6, 6, 4, this);
 
         //Lower lift

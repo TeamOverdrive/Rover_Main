@@ -23,18 +23,17 @@ public class Depot_Sample extends Team753Linear{
         Robot.getLift().setTarget(0);
         Robot.getLift().setPower(-0.5);
         while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 150){
-            /*
+
             if(opModeIsActive() &&
                     Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition &&
                     Robot.getLift().getAveragePosition()<= 200){
                 Robot.getLift().unlock();
             }
-            */
+
         }
         Robot.getLift().setPower(-0.15);
-        Robot.getLift().unlock();
         Robot.getLift().setTarget(3800);
-        while(opModeIsActive() && Robot.getLift().isLocked()){}
+        while(opModeIsActive() && Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
         Robot.getLift().setPower(1);
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
@@ -46,40 +45,41 @@ public class Depot_Sample extends Team753Linear{
 
 
         //Sample
-        Robot.getDrive().encoderTurn(90, 0.75, 4, this);
-        Robot.getDrive().encoderDrive(0.7, -16, -16, 5, this);
+        Robot.getDrive().encoderTurn(90, 0.75, 3, this);
+        Robot.getDrive().encoderDrive(0.7, -20, -20, 3, this);
         enableDetector();
+        Robot.getDrive().encoderDrive(0.35, 4, 4, 2, this);
 
         if(goldAligned()){
-            Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
-            Robot.getDrive().encoderDrive(0.75, 18, 18, 5, this);
-            Robot.getDrive().encoderDrive(0.75, -18, -18, 5, this);
-            Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+            Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+            Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
+            Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
+            Robot.getDrive().encoderTurn(90, 0.75, 3, this);
             //drive to wall
-            Robot.getDrive().encoderDrive(0.75, 78, 78, 4, this);
+            Robot.getDrive().encoderDrive(0.75, 68, 68, 4, this);
         }
         else {
             Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
 
             if (goldAligned()) {
-                Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
-                Robot.getDrive().encoderDrive(0.75, 18, 18, 5, this);
-                Robot.getDrive().encoderDrive(0.75, -18, -18, 5, this);
-                Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+                Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+                Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
+                Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
+                Robot.getDrive().encoderTurn(90, 0.75, 3, this);
                 //drive to wall
-                Robot.getDrive().encoderDrive(0.6, 62, 62, 4, this);
+                Robot.getDrive().encoderDrive(0.6, 52, 52, 4, this);
             }
             else {
                 Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
 
                 if (goldAligned()) {
-                    Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
-                    Robot.getDrive().encoderDrive(0.75, 18, 18, 5, this);
-                    Robot.getDrive().encoderDrive(0.75, -18, -18, 5, this);
-                    Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+                    Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+                    Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
+                    Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
+                    Robot.getDrive().encoderTurn(90, 0.75, 3, this);
                 }
                 //drive to wall
-                Robot.getDrive().encoderDrive(0.6, 46, 46, 3, this);
+                Robot.getDrive().encoderDrive(0.6, 36, 36, 3, this);
             }
         }
 

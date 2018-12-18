@@ -12,7 +12,7 @@ import static com.team2753.Constants.COUNTS_PER_INCH;
  */
 
 @Autonomous(name = "Depot Auto", group = "0_auto")
-//@Disabled
+@Disabled
 public class Depot extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,20 +26,15 @@ public class Depot extends Team753Linear{
         //Land
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.getLift().setTarget(0);
-        Robot.getLift().setPower(-0.5);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 150){
-            /*
-            if(opModeIsActive() &&
-                    Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition &&
+        Robot.getLift().setPower(-0.65);
+        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 75){
+            if(Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition &&
                     Robot.getLift().getAveragePosition()<= 200){
                 Robot.getLift().unlock();
             }
-            */
         }
-        Robot.getLift().setPower(-0.15);
-        Robot.getLift().unlock();
+        Robot.getLift().setPower(0);
         Robot.getLift().setTarget(3800);
-        while(opModeIsActive() && Robot.getLift().isLocked()){}
         Robot.getLift().setPower(1);
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);

@@ -15,42 +15,54 @@ import static com.team2753.Constants.COUNTS_PER_INCH;
  */
 
 @Autonomous
-@Disabled
+//@Disabled
 public class MineralSampleTest extends Team753Linear{
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        double totalDistance = 78;
-
         waitForStart("Sampling Test", true);
-        Robot.getDrive().encoderTurn(90, 0.75, 6, this);
-        Robot.getDrive().encoderDrive(0.7, -24, -24, 5, this);
+
+        Robot.getDrive().encoderDrive(0.5, 15, 15, 3, this);
+
+        //Sample
+        Robot.getDrive().encoderTurn(90, 0.75, 3, this);
+        Robot.getDrive().encoderDrive(0.7, -20, -20, 3, this);
         enableDetector();
-        Robot.getDrive().zeroSensors();
-        threadSleep(500);
+        Robot.getDrive().encoderDrive(0.35, 4, 4, 2, this);
 
-        while(opModeIsActive() && !goldAligned() && getGoldPos() < 300){
-            Robot.getDrive().setLeftRightPower(0.35, 0.35);
+        if(goldAligned()){
+            Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+            Robot.getDrive().encoderDrive(0.75, 16, 16, 3, this);
+            Robot.getDrive().encoderDrive(0.75, -16, -16, 3, this);
+            Robot.getDrive().encoderTurn(90, 0.75, 3, this);
+            //drive to wall
+            Robot.getDrive().encoderDrive(0.75, 68, 68, 4, this);
         }
+        else {
+            Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
 
-        double leftPos = Math.abs(Robot.getDrive().getLeftCurrentPosition() * (1/COUNTS_PER_INCH));
-        double rightPos = Math.abs(Robot.getDrive().getRightCurrentPosition() * (1/COUNTS_PER_INCH));
+            if (goldAligned()) {
+                Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+                Robot.getDrive().encoderDrive(0.75, 16, 16, 3, this);
+                Robot.getDrive().encoderDrive(0.75, -16, -16, 3, this);
+                Robot.getDrive().encoderTurn(90, 0.75, 3, this);
+                //drive to wall
+                Robot.getDrive().encoderDrive(0.6, 52, 52, 4, this);
+            }
+            else {
+                Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
 
-        telemetry.addData("Distance Travled", ((leftPos+rightPos)/2));
-        telemetry.update();
-
-        Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
-        Robot.getDrive().encoderDrive(0.75, 18, 12, 5, this);
-        Robot.getDrive().encoderDrive(0.75, -18, -12, 5, this);
-        Robot.getDrive().encoderTurn(90, 0.75, 4, this);
-
-
-        double distanceRemaining = 78 - ((leftPos+rightPos)/2);
-
-
-        Robot.getDrive().encoderDrive(0.75, distanceRemaining, distanceRemaining, 8, this);
-
+                if (goldAligned()) {
+                    Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+                    Robot.getDrive().encoderDrive(0.75, 16, 16, 3, this);
+                    Robot.getDrive().encoderDrive(0.75, -16, -16, 3, this);
+                    Robot.getDrive().encoderTurn(90, 0.75, 3, this);
+                }
+                //drive to wall
+                Robot.getDrive().encoderDrive(0.6, 36, 36, 3, this);
+            }
+        }
 
         finalAction();
     }

@@ -1,6 +1,7 @@
 package com.team2753.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.team2753.Team753Linear;
 
@@ -11,7 +12,7 @@ import static com.team2753.Constants.COUNTS_PER_INCH;
  */
 
 @Autonomous(name = "Crater Auto", group = "0_auto")
-//@Disabled
+@Disabled
 public class Crater extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
