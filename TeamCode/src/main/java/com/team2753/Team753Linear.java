@@ -53,7 +53,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
     protected Gold_Position goldPosition  = null;
 
-    private static ElapsedTime runtime = new ElapsedTime();
+    private static ElapsedTime timer1 = new ElapsedTime();
     private boolean isAuto = false;
 
     /*
@@ -98,7 +98,7 @@ public abstract class Team753Linear extends LinearOpMode{
             telemetry.update();
         }
         waitForStart();
-        runtime.reset();
+        timer1.reset();
         SetStatus("Running OpMode");
         RobotLog.v("================ Running OpMode =============");
     }
@@ -109,12 +109,13 @@ public abstract class Team753Linear extends LinearOpMode{
     }
 
     public void resetRuntime() {
-        runtime.reset();
+        timer1.reset();
     }
 
     //Telemetry
     public void updateTelemetry() {
-
+        //TODO: make this better
+        /*
         if (isAuto) {
             telemetry.addData("Match Time", (int)(30 - getRuntime()));
         }
@@ -127,6 +128,7 @@ public abstract class Team753Linear extends LinearOpMode{
                 telemetry.addData("Phase", "Overtime");
             }
         }
+        */
 
         Robot.outputToTelemetry(telemetry);
 
@@ -135,7 +137,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
     public void finalAction() {
         Robot.stop();
-        threadSleep(10);
+        setTimer1(10);
         requestOpModeStop();
         if(isAuto)
             detector.disable();
@@ -149,7 +151,7 @@ public abstract class Team753Linear extends LinearOpMode{
         detector.useDefaults();
 
         // Optional Tuning
-        detector.alignSize = 200; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignSize = 600; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
         detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
         detector.downscale = 0.4; // How much to downscale the input frames
 
@@ -206,19 +208,8 @@ public abstract class Team753Linear extends LinearOpMode{
 
     }
 
-    public void threadSleep(long periodMs) {
-        long remaining = periodMs - (long) runtime.milliseconds();
-
-        // sleep for the remaining portion of the regular cycle period.
-        if (remaining > 0) {
-            try {
-                Thread.sleep(remaining);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-
-        // Reset the cycle clock for the next pass.
-        runtime.reset();
+    public void setTimer1(long periodMs) {
+        timer1.reset();
+        while(timer1.milliseconds()<periodMs && opModeIsActive()){}
     }
 }

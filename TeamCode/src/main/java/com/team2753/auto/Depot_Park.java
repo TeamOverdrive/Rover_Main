@@ -36,7 +36,7 @@ public class Depot_Park extends Team753Linear{
         Robot.getDrive().encoderTurn(-45, 0.6, 5, this);
         //Robot.getMarker().deploy();
         Robot.getIntake().setIntakePower(-0.5);
-        threadSleep(2000);
+        setTimer1(2000);
         Robot.getIntake().setIntakePower(0);
         Robot.getDrive().encoderDrive(0.8, -72, -72, 8, this);
         finalAction();

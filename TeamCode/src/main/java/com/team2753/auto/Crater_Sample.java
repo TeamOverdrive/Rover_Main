@@ -33,13 +33,11 @@ public class Crater_Sample extends Team753Linear{
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
 
-        //Drive Forward
-        Robot.getDrive().encoderDrive(0.5, 15, 15, 3, this);
-
         //Start Camera
-        Robot.getDrive().encoderTurn(90, 0.75, 3, this);
-        Robot.getDrive().encoderDrive(0.7, -20, -20, 3, this);
         enableDetector();
+
+        //Drive Forward
+        Robot.getDrive().encoderDrive(0.8, 15, 15, 3, this);
 
         //Lower lift
         Robot.getLift().unlock();
@@ -48,54 +46,56 @@ public class Crater_Sample extends Team753Linear{
         while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 100){}
         Robot.getLift().setPower(0);
 
+        //Turn
+        Robot.getDrive().encoderTurn(90, 0.75, 4, this);
+
         //Drive to first mineral
-        Robot.getDrive().encoderDrive(0.5, 4, 4, 2, this);
 
         if(goldAligned()){
+            //Mineral is in the center
             Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
-            Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
-            Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
+            Robot.getDrive().encoderDrive(0.8, 14, 14, 3, this);
+            Robot.getDrive().encoderDrive(0.8, -14, -14, 3, this);
             Robot.getDrive().encoderTurn(90, 0.75, 3, this);
             //drive to wall
-            Robot.getDrive().encoderDrive(0.75, 68, 68, 4, this);
+            Robot.getDrive().encoderDrive(0.75, 45, 45, 4, this);
         }
-        else {
-            Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
-
-            if (goldAligned()) {
-                Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
-                Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
-                Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
-                Robot.getDrive().encoderTurn(90, 0.75, 3, this);
-                //drive to wall
-                Robot.getDrive().encoderDrive(0.6, 52, 52, 4, this);
+        else if(!goldVisible()){
+            Robot.getDrive().encoderTurn(-45, 0.75, 3, this);
+            if(goldAligned()){
+                Robot.getDrive().encoderTurn(-90, 0.8, 3, this);
+                Robot.getDrive().encoderDrive(0.8, 15, 15, 3, this);
+                Robot.getDrive().encoderDrive(0.8, -15, -15, 3, this);
+                Robot.getDrive().encoderTurn(135, 0.8, 2, this);
+                Robot.getDrive().encoderDrive(0.8, 45, 45, 4, this);
             }
-            else {
-                Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
-
-                if (goldAligned()) {
-                    Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
-                    Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
-                    Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
-                    Robot.getDrive().encoderTurn(90, 0.75, 3, this);
+            else{
+                Robot.getDrive().encoderTurn(90, 0.75, 2, this);
+                if (goldAligned()){
+                    Robot.getDrive().encoderTurn(-90, 0.8, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, 15, 15, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, -15, -15, 3, this);
+                    Robot.getDrive().encoderTurn(45, 0.65, 2, this);
+                    Robot.getDrive().encoderDrive(0.8, 45, 45, 4, this);
                 }
-                //drive to wall
-                Robot.getDrive().encoderDrive(0.8, 36, 36, 3, this);
+                else {
+                    Robot.getDrive().encoderTurn(-45, 0.65, 3, this);
+                }
             }
         }
 
         //Drive to Depot
-        Robot.getDrive().encoderTurn(45, .6, 4, this);
-        Robot.getDrive().encoderDrive(0.8, 54, 54, 3, this);
+        Robot.getDrive().encoderTurnTest(45, 0.65, 4, this);
+        Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
 
         //Deposit Team Marker
         //Robot.getMarker().deploy();
         Robot.getIntake().setIntakePower(0.7);
-        threadSleep(5000);
+        setTimer1(1000);
         Robot.getIntake().setIntakePower(0);
 
         //Return to Crater
-        Robot.getDrive().encoderDrive(0.8, -66, - 66, 5, this);
+        Robot.getDrive().encoderDrive(0.8, -70, - 70, 5, this);
 
         finalAction();
     }

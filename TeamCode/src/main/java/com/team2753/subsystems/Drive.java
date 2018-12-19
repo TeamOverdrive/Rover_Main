@@ -34,7 +34,7 @@ public class Drive implements Subsystem{
     private static final double TICKS_PER_REV = MOTOR_CONFIG.getTicksPerRev();
 
     //TODO: tune this
-    //public static final PIDCoefficients NORMAL_VELOCITY_PID = new PIDCoefficients(20, 8, 12);
+    //public static final PIDFCoefficients NORMAL_VELOCITY_PIDF = new PIDCoefficients(20, 8, 12, 0);
 
 
     private DcMotorEx leftFront, leftBack, rightBack, rightFront;
@@ -43,7 +43,7 @@ public class Drive implements Subsystem{
     private RevIMU imu, imu_1;
 
     /*
-    TODO: Get roadrunner working after Dec 15 (or thanksgiving?).
+    TODO: Get roadrunner working after Jan 5 for 80+ auto
     public Drive(double trackWidth, NanoClock clock) {
         super(trackWidth, clock);
     }
@@ -68,7 +68,7 @@ public class Drive implements Subsystem{
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.FORWARD);
 
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
 
@@ -265,6 +265,61 @@ public class Drive implements Subsystem{
         double rightDistance = (WHEEL_BASE*PI*degrees)/360;
 
         encoderDrive(speed, leftDistance, rightDistance, timeoutS, linearOpMode);
+    }
+
+    public void encoderTurnTest(double degrees, double speed, double timeoutS, Team753Linear linearOpMode){
+
+        double leftDistance = (WHEEL_BASE*PI*degrees)/-360;
+        double rightDistance = (WHEEL_BASE*PI*degrees)/360;
+
+        //encoderDrive(speed, leftDistance, rightDistance, timeoutS, linearOpMode);
+        int newLeftTarget;
+        int newRightTarget;
+
+        // Ensure that the opmode is still active
+        if (linearOpMode.opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = getLeftCurrentPosition() + (int) (leftDistance * COUNTS_PER_INCH);
+            newRightTarget = getRightCurrentPosition() + (int) (rightDistance * COUNTS_PER_INCH);
+            setLeftRightTarget(newLeftTarget, newRightTarget);
+            //int counter1 = 0;
+            //int counter2 = 0;
+
+            // Turn On RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            timeout.reset();
+            setLeftRightPower(Math.abs(speed), Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (linearOpMode.opModeIsActive() &&
+                    (timeout.seconds() < timeoutS) &&
+                    (leftBack.isBusy() || rightBack.isBusy() || leftFront.isBusy() || rightFront.isBusy())) {
+                linearOpMode.updateTelemetry();
+                //slow the motors down to half the original speed when we get within 4 inches of our target and the speed is greater than 0.1.
+                if ((Math.abs(newLeftTarget - getLeftCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                        && (Math.abs(newRightTarget - getRightCurrentPosition()) < (4.0 * COUNTS_PER_INCH))
+                        && speed > 0.1) {
+
+                    setLeftRightPower(Math.abs(speed * 0.75), Math.abs(speed * 0.75));
+                }
+                //slow the motors down to 0.35 of the original speed when we get within 2 inches of our target and the speed is greater than 0.1.
+                if ((Math.abs(newLeftTarget - getLeftCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                        && (Math.abs(newRightTarget - getRightCurrentPosition()) < (2.0 * COUNTS_PER_INCH))
+                        && speed > 0.1) {
+                    setLeftRightPower(0.25, 0.25);
+                }
+            }
+            // Stop all motion;
+            setLeftRightPower(0,0);
+
+            // Turn off RUN_TO_POSITION
+            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            //  linearOpMode.sleep(250);   // optional pause after each move
+        }
 
     }
 

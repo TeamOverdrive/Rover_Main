@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +28,7 @@ public class SampleMecanumDrive extends MecanumDrive {
      * https://github.com/acmerobotics/relic-recovery/blob/master/TeamCode/src/main/java/com/acmerobotics/relicrecovery/opmodes/tuner/DriveVelocityPIDTuner.java
      */
 
-    public static final PIDCoefficients NORMAL_VELOCITY_PID = new PIDCoefficients(20, 8, 12);
+    public static final PIDFCoefficients NORMAL_VELOCITY_PIDF = new PIDFCoefficients(20, 8, 12, 0);
 
     private DcMotorEx leftFront, leftRear, rightRear, rightFront;
     private List<DcMotorEx> motors;
@@ -46,7 +47,7 @@ public class SampleMecanumDrive extends MecanumDrive {
             // if you keep it, then don't tune kStatic or kA
             // otherwise, at least tune kStatic and kA potentially
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, NORMAL_VELOCITY_PID);
+            motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, NORMAL_VELOCITY_PIDF);
         }
 
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
