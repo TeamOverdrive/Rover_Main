@@ -151,11 +151,10 @@ public abstract class Team753Linear extends LinearOpMode{
         detector.useDefaults();
 
         // Optional Tuning
-        detector.alignSize = 600; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.alignSize = 260; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = -150; // How far from center frame to offset this alignment zone.
         detector.downscale = 0.4; // How much to downscale the input frames
 
-        //TODO: tune perfectArea
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.PERFECT_AREA; // Can also be PERFECT_AREA
         detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
         detector.maxAreaScorer.weight = 0.005;
