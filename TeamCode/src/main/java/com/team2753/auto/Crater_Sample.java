@@ -10,7 +10,7 @@ import static com.team2753.Constants.COUNTS_PER_INCH;
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/15/2018.
  */
 
-@Autonomous(name = "Crater_Sample")
+@Autonomous(name = "Crater Sample")
 public class Crater_Sample extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,7 +24,7 @@ public class Crater_Sample extends Team753Linear{
         //Land
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.getLift().setTarget(0);
-        Robot.getLift().setPower(-0.5);
+        Robot.getLift().setPower(-0.45);
         Robot.getLift().unlock();
         while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 25){}
         Robot.getLift().setPower(0);
@@ -71,7 +71,7 @@ public class Crater_Sample extends Team753Linear{
                     Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
                 }
                 else {
-                    Robot.getDrive().encoderTurn(45, 0.65, 3, this);
+                    Robot.getDrive().encoderTurn(45, 0.65, 30, this);
                     Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
                 }
             }
@@ -88,7 +88,7 @@ public class Crater_Sample extends Team753Linear{
         Robot.getIntake().setIntakePower(0);
 
         //Return to Crater
-        Robot.getDrive().encoderDrive(0.8, -70, - 70, 5, this);
+        Robot.getDrive().encoderDrive(0.8, -70, -70, 5, this);
 
         finalAction();
     }

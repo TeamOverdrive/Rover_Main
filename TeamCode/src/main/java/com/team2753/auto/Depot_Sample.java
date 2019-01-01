@@ -21,85 +21,81 @@ public class Depot_Sample extends Team753Linear{
         //Land
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.getLift().setTarget(0);
-        Robot.getLift().setPower(-0.5);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 150){
-
-            if(opModeIsActive() &&
-                    Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition &&
-                    Robot.getLift().getAveragePosition()<= 200){
-                Robot.getLift().unlock();
-            }
-
-        }
-        Robot.getLift().setPower(-0.15);
+        Robot.getLift().setPower(-0.45);
+        Robot.getLift().unlock();
+        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 25){}
+        Robot.getLift().setPower(0);
         Robot.getLift().setTarget(3800);
-        while(opModeIsActive() && Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
         Robot.getLift().setPower(1);
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
 
+        //Start Camera
+        enableDetector();
+
         //Drive Forward
-        Robot.getDrive().encoderDrive(0.7, 74, 74, 5, this);
+        Robot.getDrive().encoderDrive(0.8, 14, 14, 3, this);
 
         //Lower lift
-
-
-        //Sample
-        Robot.getDrive().encoderTurn(90, 0.75, 3, this);
-        Robot.getDrive().encoderDrive(0.7, -20, -20, 3, this);
-        enableDetector();
-        Robot.getDrive().encoderDrive(0.35, 4, 4, 2, this);
-
-        if(goldAligned()){
-            Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
-            Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
-            Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
-            Robot.getDrive().encoderTurn(90, 0.75, 3, this);
-            //drive to wall
-            Robot.getDrive().encoderDrive(0.75, 68, 68, 4, this);
-        }
-        else {
-            Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
-
-            if (goldAligned()) {
-                Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
-                Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
-                Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
-                Robot.getDrive().encoderTurn(90, 0.75, 3, this);
-                //drive to wall
-                Robot.getDrive().encoderDrive(0.6, 52, 52, 4, this);
-            }
-            else {
-                Robot.getDrive().encoderDrive(0.6, 16, 16, 3, this);
-
-                if (goldAligned()) {
-                    Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
-                    Robot.getDrive().encoderDrive(0.75, 18, 18, 3, this);
-                    Robot.getDrive().encoderDrive(0.75, -18, -18, 3, this);
-                    Robot.getDrive().encoderTurn(90, 0.75, 3, this);
-                }
-                //drive to wall
-                Robot.getDrive().encoderDrive(0.6, 36, 36, 3, this);
-            }
-        }
-
-
-        //Drive to Depot
-
-        //Deposit Team Marker
-        //Robot.getMarker().deploy();
-        Robot.getIntake().setIntakePower(0.7);
+        Robot.getLift().unlock();
         Robot.getLift().setTarget(0);
         Robot.getLift().setPower(-0.75);
         while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 100){}
         Robot.getLift().setPower(0);
-        Robot.getIntake().setIntakePower(0);
+
+        if(goldAligned()){
+            //Mineral is in the center
+            Robot.getDrive().encoderDrive(0.8, 48, 48, 3, this);
+
+            //Deposit Team Marker
+            Robot.getIntake().setIntakePower(0.7);
+            Robot.getDrive().encoderTurn(-52, 0.5, 2, this);
+            Robot.getIntake().setIntakePower(0);
+
+            //Park
+            Robot.getDrive().encoderDrive(0.85, -78, -78, 4, this);
+        }
+        else if(!goldAligned()){
+            Robot.getDrive().encoderTurn(45, 0.65, 3, this);
+            if(goldAligned()){
+                Robot.getDrive().encoderDrive(0.8, 35, 35, 3, this);
+
+                Robot.getDrive().encoderTurn(-102, 0.75, 3, this);
+                Robot.getDrive().encoderDrive(0.75, 24, 24, 2, this);
+
+                Robot.getIntake().setIntakePower(0.7);
+                setTimer1(750);
+                Robot.getIntake().setIntakePower(0);
+
+                //Park
+                Robot.getDrive().encoderDrive(0.75, -76, -76, 4, this);
+
+            }
+            else{
+                Robot.getDrive().encoderTurn(-90, 0.75, 2, this);
+                if (goldAligned()){
+                    Robot.getDrive().encoderDrive(0.8, 16, 16, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, -14, -14, 3, this);
+                    Robot.getDrive().encoderTurn(-50, 0.65, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, -52, -52, 4, this);
+                }
+                else {
+                    Robot.getDrive().encoderTurn(-50, 0.65, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, -52, -52, 4, this);
+                }
+                Robot.getDrive().encoderTurn(45, 0.65, 3, this);
+                Robot.getDrive().encoderDrive(0.8, 50, 50, 3, this);
+
+                //Deposit Team Marker
+                Robot.getIntake().setIntakePower(0.7);
+                setTimer1(750);
+                Robot.getIntake().setIntakePower(0);
 
 
-        //Drive to Crater
-        Robot.getDrive().encoderTurn(-45, 0.8, 3, this);
-        Robot.getDrive().encoderDrive(0.8, 50, 50, 4, this);
-
+                //Drive to Crater
+                Robot.getDrive().encoderDrive(0.9, -55, -55, 4, this);
+            }
+        }
 
         finalAction();
     }

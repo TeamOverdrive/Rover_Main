@@ -10,7 +10,7 @@ import com.team2753.Team753Linear;
  */
 
 @Autonomous(name = "Land Only", group = "0_auto")
-//@Disabled
+@Disabled
 public class Hang extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {

@@ -151,7 +151,7 @@ public abstract class Team753Linear extends LinearOpMode{
         detector.useDefaults();
 
         // Optional Tuning
-        detector.alignSize = 260; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignSize = 275; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
         detector.alignPosOffset = -150; // How far from center frame to offset this alignment zone.
         detector.downscale = 0.4; // How much to downscale the input frames
 
