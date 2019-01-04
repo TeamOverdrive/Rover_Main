@@ -18,8 +18,8 @@ public class Intake implements Subsystem {
     private DcMotor slideMotor;
     private Servo intakeGate;
 
-    private double gateDownPos = 0.25;
-    private double gateUpPos = 0.75;
+    private double gateDownPos = 0.85;
+    private double gateUpPos = 0;
 
 
     @Override
@@ -29,16 +29,15 @@ public class Intake implements Subsystem {
         slideMotor = (DcMotor) linearOpMode.hardwareMap.get("slide");
 
         intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        slideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intakeGate = (Servo) linearOpMode.hardwareMap.get("intake_gate");
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        setGatePosition(0.5);
-
         gateDown();
+
         if(auto){
             setSlidePower(-0.6);
             threadSleep(750);
@@ -99,6 +98,10 @@ public class Intake implements Subsystem {
 
     public void gateDown(){
         setGatePosition(gateDownPos);
+    }
+
+    public void gateUp(){
+        setGatePosition(gateUpPos);
     }
 
     public void setGatePosition(double position){

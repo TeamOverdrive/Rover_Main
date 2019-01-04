@@ -14,7 +14,6 @@ import static com.team2753.libs.MathUtil.scaleInput;
 public class Teleop extends Team753Linear{
 
     boolean liftOverride = true;
-    private double angle  = 0;
 
     @Override
     public void runOpMode(){
@@ -36,9 +35,9 @@ public class Teleop extends Team753Linear{
                 } else if (gamepad1.dpad_down) {
                     Robot.getDrive().setLeftRightPower(-0.3, -0.3);
                 } else if (gamepad1.dpad_left) {
-                    Robot.getDrive().setLeftRightPower(0.35, -0.35);
-                } else if (gamepad1.dpad_right) {
                     Robot.getDrive().setLeftRightPower(-0.35, 0.35);
+                } else if (gamepad1.dpad_right) {
+                    Robot.getDrive().setLeftRightPower(0.35, -0.35);
                 } else {
                     Robot.getDrive().setLeftRightPower(0, 0);
                 }
@@ -71,10 +70,10 @@ public class Teleop extends Team753Linear{
                 Robot.getIntake().setIntakePower(0);
 
             if(gamepad1.left_trigger >= 0.1){
-                Robot.getIntake().setSlidePower(1);
+                Robot.getIntake().setSlidePower(-1);
             }
             else if(gamepad1.right_trigger >= 0.1){
-                Robot.getIntake().setSlidePower(-1);
+                Robot.getIntake().setSlidePower(1);
             }
             else
                 Robot.getIntake().setSlidePower(0);
@@ -118,6 +117,11 @@ public class Teleop extends Team753Linear{
                 }
             }
 
+            //gate
+            if(gamepad2.x)
+                Robot.getIntake().gateDown();
+            if(gamepad2.b)
+                Robot.getIntake().gateUp();
 
 
             if(gamepad2.right_bumper)
@@ -129,15 +133,6 @@ public class Teleop extends Team753Linear{
                 Robot.getMarker().retract();
             if(gamepad1.left_bumper)
                 Robot.getMarker().deploy();
-
-            if(gamepad2.a){
-                angle -= 0.05;
-            } else if (gamepad2.y) {
-                angle += 0.05;
-            }
-
-            Robot.getIntake().setGatePosition(angle);
-
 
             updateTelemetry();
         }

@@ -21,9 +21,9 @@ public class Depot_Sample extends Team753Linear{
         //Land
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.getLift().setTarget(0);
-        Robot.getLift().setPower(-0.45);
+        Robot.getLift().setPower(-1);
         Robot.getLift().unlock();
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 25){}
+        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 75){}
         Robot.getLift().setPower(0);
         Robot.getLift().setTarget(3800);
         Robot.getLift().setPower(1);
