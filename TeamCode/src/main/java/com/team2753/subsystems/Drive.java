@@ -76,6 +76,7 @@ public class Drive implements Subsystem{
             imu = new RevIMU("imu", linearOpMode.hardwareMap);
             imu_1 = new RevIMU("imu_1", linearOpMode.hardwareMap);
             zeroSensors();
+            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
 

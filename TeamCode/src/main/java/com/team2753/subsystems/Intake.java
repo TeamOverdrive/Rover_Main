@@ -18,7 +18,7 @@ public class Intake implements Subsystem {
     private DcMotor slideMotor;
     private Servo intakeGate;
 
-    private double gateDownPos = 0.85;
+    private double gateDownPos = 1;
     private double gateUpPos = 0;
 
 

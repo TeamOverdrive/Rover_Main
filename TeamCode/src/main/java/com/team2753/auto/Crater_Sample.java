@@ -23,10 +23,11 @@ public class Crater_Sample extends Team753Linear{
 
         //Land
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.getLift().setTarget(0);
+        Robot.getLift().setTarget(-100);
         Robot.getLift().setPower(-1);
         Robot.getLift().unlock();
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 75){}
+        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 50){}
+        setTimer1(250);
         Robot.getLift().setPower(0);
         Robot.getLift().setTarget(3800);
         Robot.getLift().setPower(1);
@@ -48,47 +49,86 @@ public class Crater_Sample extends Team753Linear{
 
         if(goldAligned()){
             //Mineral is in the center
-            Robot.getDrive().encoderDrive(0.8, 14, 14, 3, this);
+            Robot.getDrive().encoderDrive(0.8, 16, 16, 3, this);
             Robot.getDrive().encoderDrive(0.8, -14, -14, 3, this);
             Robot.getDrive().encoderTurn(90, 0.75, 3, this);
             //drive to wall
-            Robot.getDrive().encoderDrive(0.75, 46, 46, 4, this);
+            Robot.getDrive().encoderDrive(0.75, 45, 45, 4, this);
+
+            //Drive to Depot
+            Robot.getDrive().encoderTurnTest(50, 0.6, 4, this);
+            Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
+
+            //Deposit Team Marker
+            //Robot.getMarker().deploy();
+            Robot.getIntake().setIntakePower(0.7);
+            setTimer1(750);
+            Robot.getIntake().setIntakePower(0);
+
+            //Return to Crater
+            Robot.getDrive().encoderDrive(0.8, -60, -60, 5, this);
         }
         else if(!goldAligned()){
             Robot.getDrive().encoderTurn(-45, 0.65, 3, this);
             if(goldAligned()){
-                Robot.getDrive().encoderDrive(0.8, 13, 13, 3, this);
-                Robot.getDrive().encoderDrive(0.8, -13, -13, 3, this);
+                Robot.getDrive().encoderDrive(0.8, 18, 18, 3, this);
+                Robot.getDrive().encoderDrive(0.8, -16, -16, 3, this);
                 Robot.getDrive().encoderTurn(135, 0.8, 2, this);
                 Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
+
+                //Drive to Depot
+                Robot.getDrive().encoderTurnTest(45, 0.6, 4, this);
+                Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
+
+                //Deposit Team Marker
+                //Robot.getMarker().deploy();
+                Robot.getIntake().setIntakePower(0.7);
+                setTimer1(750);
+                Robot.getIntake().setIntakePower(0);
+
+                //Return to Crater
+                Robot.getDrive().encoderDrive(0.8, -70, -70, 5, this);
             }
             else{
                 Robot.getDrive().encoderTurn(90, 0.75, 2, this);
                 if (goldAligned()){
-                    Robot.getDrive().encoderDrive(0.8, 13, 13, 3, this);
-                    Robot.getDrive().encoderDrive(0.8, -13, -13, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, 16, 16, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, -16, -16, 3, this);
                     Robot.getDrive().encoderTurn(45, 0.65, 2, this);
                     Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
+
+                    //Drive to Depot
+                    Robot.getDrive().encoderTurnTest(50, 0.6, 4, this);
+                    Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
+
+                    //Deposit Team Marker
+                    //Robot.getMarker().deploy();
+                    Robot.getIntake().setIntakePower(0.7);
+                    setTimer1(750);
+                    Robot.getIntake().setIntakePower(0);
+
+                    //Return to Crater
+                    Robot.getDrive().encoderDrive(0.8, -72, -72, 5, this);
                 }
                 else {
                     Robot.getDrive().encoderTurn(45, 0.65, 30, this);
                     Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
+
+                    //Drive to Depot
+                    Robot.getDrive().encoderTurnTest(50, 0.6, 4, this);
+                    Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
+
+                    //Deposit Team Marker
+                    //Robot.getMarker().deploy();
+                    Robot.getIntake().setIntakePower(0.7);
+                    setTimer1(750);
+                    Robot.getIntake().setIntakePower(0);
+
+                    //Return to Crater
+                    Robot.getDrive().encoderDrive(0.8, -72, -72, 5, this);
                 }
             }
         }
-
-        //Drive to Depot
-        Robot.getDrive().encoderTurnTest(45, 0.6, 4, this);
-        Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
-
-        //Deposit Team Marker
-        //Robot.getMarker().deploy();
-        Robot.getIntake().setIntakePower(0.7);
-        setTimer1(750);
-        Robot.getIntake().setIntakePower(0);
-
-        //Return to Crater
-        Robot.getDrive().encoderDrive(0.8, -70, -70, 5, this);
 
         finalAction();
     }
