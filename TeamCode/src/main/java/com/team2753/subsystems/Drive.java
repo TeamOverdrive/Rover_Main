@@ -70,7 +70,10 @@ public class Drive implements Subsystem{
 
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if(auto){
             imu = new RevIMU("imu", linearOpMode.hardwareMap);
