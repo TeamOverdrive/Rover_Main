@@ -29,7 +29,7 @@ public class Teleop extends Team753Linear{
             //D-pad controls for slower movement
 
 
-            if (Math.abs(gamepad1.right_stick_y) < 0.01 && Math.abs(gamepad1.left_stick_y) < 0.01) {
+            if (Math.abs(gamepad1.right_stick_y) < 0.05 && Math.abs(gamepad1.left_stick_y) < 0.05) {
                 if (gamepad1.dpad_up) {
                     Robot.getDrive().setLeftRightPower(0.3, 0.3);
                 } else if (gamepad1.dpad_down) {
