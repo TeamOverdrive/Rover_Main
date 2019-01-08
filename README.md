@@ -1,6 +1,6 @@
 ## FTC app for 2753
 
- Main Repository for FTC 2753 Team Overdrive
+ Main Repository for FTC 2753 Team Overdrive Robot Controller
 
  
 #### Libraries Used
