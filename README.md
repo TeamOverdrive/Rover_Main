@@ -1,6 +1,6 @@
-## 2753_RoverRuckus_18-19
+## FTC app for 2753
 
- FTC 2753 Team Overdrive Main Repository for FIRST Tech Challenge 2018-2019 game Rover Ruckus
+ Main Repository for FTC 2753 Team Overdrive
 
  
 #### Libraries Used
