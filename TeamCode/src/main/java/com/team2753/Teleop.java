@@ -117,6 +117,13 @@ public class Teleop extends Team753Linear{
                 }
             }
 
+            //gate
+            if(gamepad2.x)
+                Robot.getIntake().gateDown();
+            if(gamepad2.b)
+                Robot.getIntake().gateUp();
+
+            /*
             float intakeThrottle = gamepad2.left_stick_y;
             //Clip
             intakeThrottle = Range.clip(intakeThrottle, -1, 1);
@@ -126,12 +133,7 @@ public class Teleop extends Team753Linear{
             intakeThrottle = intakeThrottle * -1;
             //Apply power to motor
             Robot.getIntake().setIntakePower(intakeThrottle);
-
-            //gate
-            if(gamepad2.x)
-                Robot.getIntake().gateDown();
-            if(gamepad2.b)
-                Robot.getIntake().gateUp();
+            */
 
 
             if(gamepad2.right_bumper)
