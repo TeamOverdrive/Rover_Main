@@ -38,7 +38,7 @@ public class Crater_Sample extends Team753Linear{
         enableDetector();
 
         //Drive Forward
-        Robot.getDrive().encoderDrive(0.8, 13, 13, 3, this);
+        Robot.getDrive().encoderDrive(0.8, 12, 12, 3, this);
 
         //Lower lift
         Robot.getLift().unlock();
@@ -92,7 +92,7 @@ public class Crater_Sample extends Team753Linear{
             else{
                 Robot.getDrive().encoderTurn(90, 0.75, 2, this);
                 if (goldAligned()){
-                    Robot.getDrive().encoderDrive(0.8, 16, 16, 3, this);
+                    Robot.getDrive().encoderDrive(0.8, 18, 18, 3, this);
                     Robot.getDrive().encoderDrive(0.8, -16, -16, 3, this);
                     Robot.getDrive().encoderTurn(45, 0.65, 2, this);
                     Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
@@ -108,7 +108,7 @@ public class Crater_Sample extends Team753Linear{
                     Robot.getIntake().setIntakePower(0);
 
                     //Return to Crater
-                    Robot.getDrive().encoderDrive(0.8, -72, -72, 5, this);
+                    Robot.getDrive().encoderDrive(0.8, -70, -70, 5, this);
                 }
                 else {
                     Robot.getDrive().encoderTurn(45, 0.65, 30, this);

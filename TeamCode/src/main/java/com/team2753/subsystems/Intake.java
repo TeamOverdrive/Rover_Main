@@ -19,7 +19,7 @@ public class Intake implements Subsystem {
     private Servo intakeGate;
 
     private double gateDownPos = 1;
-    private double gateUpPos = 0;
+    private double gateUpPos = 0.15;
 
 
     @Override
@@ -35,6 +35,8 @@ public class Intake implements Subsystem {
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         gateDown();
 

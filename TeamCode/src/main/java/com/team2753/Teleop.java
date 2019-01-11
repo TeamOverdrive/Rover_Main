@@ -31,13 +31,13 @@ public class Teleop extends Team753Linear{
 
             if (Math.abs(gamepad1.right_stick_y) < 0.05 && Math.abs(gamepad1.left_stick_y) < 0.05) {
                 if (gamepad1.dpad_up) {
-                    Robot.getDrive().setLeftRightPower(0.3, 0.3);
+                    Robot.getDrive().setLeftRightPower(0.4, 0.4);
                 } else if (gamepad1.dpad_down) {
-                    Robot.getDrive().setLeftRightPower(-0.3, -0.3);
+                    Robot.getDrive().setLeftRightPower(-0.4, -0.4);
                 } else if (gamepad1.dpad_left) {
-                    Robot.getDrive().setLeftRightPower(-0.35, 0.35);
+                    Robot.getDrive().setLeftRightPower(-0.4, 0.4);
                 } else if (gamepad1.dpad_right) {
-                    Robot.getDrive().setLeftRightPower(0.35, -0.35);
+                    Robot.getDrive().setLeftRightPower(0.4, -0.4);
                 } else {
                     Robot.getDrive().setLeftRightPower(0, 0);
                 }
