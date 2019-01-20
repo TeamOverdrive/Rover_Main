@@ -61,7 +61,7 @@ public class Crater_Sample extends Team753Linear{
 
             //Deposit Team Marker
             //Robot.getMarker().deploy();
-            Robot.getIntake().setIntakePower(0.7);
+            Robot.getIntake().setIntakePower(0.5);
             setTimer1(750);
             Robot.getIntake().setIntakePower(0);
 
@@ -82,7 +82,7 @@ public class Crater_Sample extends Team753Linear{
 
                 //Deposit Team Marker
                 //Robot.getMarker().deploy();
-                Robot.getIntake().setIntakePower(0.7);
+                Robot.getIntake().setIntakePower(0.5);
                 setTimer1(750);
                 Robot.getIntake().setIntakePower(0);
 
@@ -103,7 +103,7 @@ public class Crater_Sample extends Team753Linear{
 
                     //Deposit Team Marker
                     //Robot.getMarker().deploy();
-                    Robot.getIntake().setIntakePower(0.7);
+                    Robot.getIntake().setIntakePower(0.5);
                     setTimer1(750);
                     Robot.getIntake().setIntakePower(0);
 
