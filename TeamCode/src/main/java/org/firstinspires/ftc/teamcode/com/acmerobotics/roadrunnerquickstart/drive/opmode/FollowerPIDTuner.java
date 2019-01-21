@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveBase;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.util
 /*
  * Op mode for tuning follower PID coefficients. This is the final step in the tuning process.
  */
+@Disabled
 @Autonomous
 public class FollowerPIDTuner extends LinearOpMode {
     @Override

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.ele
 
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.elevator.Elevator;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.elev
  * Simple test of motion-profiled elevator autonomous operation. The elevator should move *smoothly*
  * between random heights.
  */
+@Disabled
 @Autonomous
 public class ElevatorTestOpMode extends LinearOpMode {
     @Override

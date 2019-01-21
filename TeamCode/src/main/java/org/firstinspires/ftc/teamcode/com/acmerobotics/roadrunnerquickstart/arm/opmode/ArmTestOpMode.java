@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.arm
 
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.arm.Arm;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.arm.
  * Simple test of motion-profiled arm autonomous operation. The arm should move *smoothly*
  * between random angles.
  */
+@Disabled
 @Autonomous
 public class ArmTestOpMode extends LinearOpMode {
     @Override

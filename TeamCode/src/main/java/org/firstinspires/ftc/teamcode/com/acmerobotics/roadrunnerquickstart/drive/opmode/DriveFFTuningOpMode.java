@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
@@ -27,6 +28,7 @@ import java.util.List;
  *      regression.
  */
 @Config
+@Disabled
 @Autonomous
 public class DriveFFTuningOpMode extends LinearOpMode {
     public static final double MAX_POWER = 0.7;

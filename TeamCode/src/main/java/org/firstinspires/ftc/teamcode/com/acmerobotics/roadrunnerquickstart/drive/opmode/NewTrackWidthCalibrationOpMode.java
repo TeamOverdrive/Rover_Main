@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.Angle;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.MovingStatistics;
 
@@ -26,6 +27,7 @@ import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.driv
  * averaged over those runs.
  */
 @Config
+@Disabled
 @Autonomous
 public class NewTrackWidthCalibrationOpMode extends LinearOpMode {
     public static int CIRCUMFERENTIAL_DISTANCE = 500;

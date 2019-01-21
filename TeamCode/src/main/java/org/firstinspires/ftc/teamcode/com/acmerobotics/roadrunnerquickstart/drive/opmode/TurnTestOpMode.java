@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveBase;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.com.acmerobotics.roadrunnerquickstart.util
  * This is a simple routine to test turning capabilities. If this is consistently overshooting or
  * undershooting by a significant amount, re-run TrackWidthCalibrationOpMode.
  */
+@Disabled
 @Autonomous
 public class TurnTestOpMode extends LinearOpMode {
     @Override
