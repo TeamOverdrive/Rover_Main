@@ -24,6 +24,9 @@ package org.firstinspires.ftc.teamcode.org.openftc.revextensions2.examples;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.openftc.revextensions2.ExpansionHubEx;
+import org.openftc.revextensions2.RevExtensions2;
+
 
 @TeleOp(group = "RevExtensions2Examples")
 public class MiscExamples extends LinearOpMode
