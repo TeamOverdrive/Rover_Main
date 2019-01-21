@@ -10,4 +10,4 @@
 * [Road Runner](https://github.com/acmerobotics/road-runner) by https://github.com/rbrott
 
 
-*Does not work with ZTE Speeds*
+*Does not work with the ZTE speed phone
