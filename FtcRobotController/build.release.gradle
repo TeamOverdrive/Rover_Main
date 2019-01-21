@@ -5,4 +5,5 @@ dependencies {
     implementation (name:'Hardware-release', ext: 'aar')
     implementation (name:'FtcCommon-release', ext: 'aar')
     implementation (name:'WirelessP2p-release', ext:'aar')
+    implementation 'org.openftc:rev-extensions-2:1.1'
 }
