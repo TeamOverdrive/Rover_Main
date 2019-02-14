@@ -51,7 +51,7 @@ Explain the problem and include additional details to help maintainers reproduce
 
 - Describe the exact steps which reproduce the problem in as many details as possible.
 
-- Provide specific examples to demonstrate the steps.
+- Provide specific org.openftc.revextensions2.examples to demonstrate the steps.
 
 - Describe the behavior you observed after following the steps and point out what exactly is the problem with that behavior. Explain which behavior you expected to see instead and why. If applicable, include screenshots which show you following the described steps and clearly demonstrate the problem.
 

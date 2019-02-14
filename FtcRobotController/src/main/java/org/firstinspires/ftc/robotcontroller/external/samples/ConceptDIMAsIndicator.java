@@ -41,7 +41,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  * This code assumes a DIM name "dim".
  *
- * There are many examples where the robot might like to signal the driver, without requiring them
+ * There are many org.openftc.revextensions2.examples where the robot might like to signal the driver, without requiring them
  * to look at the driver station.  This might be something like a "ball in hopper" condition or a
  * "ready to shoot" condition.
  *

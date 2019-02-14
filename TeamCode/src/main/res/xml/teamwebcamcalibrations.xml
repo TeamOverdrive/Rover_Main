@@ -46,8 +46,8 @@
         (r:radial, t:tangential): [r0, r1, t0, t1, r2, r3, r4, r5]
         see https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html
 
-  The examples here are commented out as the values are built-in to the FTC SDK. They serve instead
-  here as examples on how make your own.
+  The org.openftc.revextensions2.examples here are commented out as the values are built-in to the FTC SDK. They serve instead
+  here as org.openftc.revextensions2.examples on how make your own.
 
 -->
 <Calibrations>

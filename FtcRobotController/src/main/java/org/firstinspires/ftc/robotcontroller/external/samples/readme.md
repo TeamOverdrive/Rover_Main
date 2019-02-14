@@ -18,7 +18,7 @@ The class names will follow a naming convention which indicates the purpose of e
 The prefix of the name will be one of the following:
 
 Basic:  	This is a minimally functional OpMode used to illustrate the skeleton/structure
-            of a particular style of OpMode.  These are bare bones examples.
+            of a particular style of OpMode.  These are bare bones org.openftc.revextensions2.examples.
 
 Sensor:    	This is a Sample OpMode that shows how to use a specific sensor.
             It is not intended to drive a functioning robot, it is simply showing the minimal code

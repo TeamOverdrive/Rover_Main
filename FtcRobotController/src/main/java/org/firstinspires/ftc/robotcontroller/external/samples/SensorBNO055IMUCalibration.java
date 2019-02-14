@@ -61,7 +61,7 @@ import java.util.Locale;
  * Intel</a>, is informative:</p>
  *
  * <p>"This device requires calibration in order to operate accurately. [...] Calibration data is
- * lost on a power cycle. See one of the examples for a description of how to calibrate the device,
+ * lost on a power cycle. See one of the org.openftc.revextensions2.examples for a description of how to calibrate the device,
  * but in essence:</p>
  *
  * <p>There is a calibration status register available [...] that returns the calibration status
