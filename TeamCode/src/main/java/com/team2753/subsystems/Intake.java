@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 import com.team2753.Team753Linear;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -16,7 +17,7 @@ public class Intake implements Subsystem {
 
     private DcMotor intakeMotor;
     private DcMotor slideMotor;
-    private Servo intakeGate;
+    private Servo intakeLift1, intakeLift2;
 
     private double gateDownPos = 1;
     private double gateUpPos = 0.15;
@@ -28,17 +29,19 @@ public class Intake implements Subsystem {
         intakeMotor = (DcMotor) linearOpMode.hardwareMap.get("intake");
         slideMotor = (DcMotor) linearOpMode.hardwareMap.get("slide");
 
+        //TODO fix directions
         intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        intakeGate = (Servo) linearOpMode.hardwareMap.get("intake_gate");
+        intakeLift2 = (Servo) linearOpMode.hardwareMap.get("intake_gate");
+        intakeLift1 = (Servo) linearOpMode.hardwareMap.get("intake_lift");
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        gateDown();
+        //gateDown();
 
         if(auto){
             setSlidePower(-0.6);
@@ -69,15 +72,17 @@ public class Intake implements Subsystem {
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Intake Position", slideMotor.getCurrentPosition());
-        telemetry.addData("Gate Position", intakeGate.getPosition());
+        telemetry.addData("Lift 1 Position", intakeLift1.getPosition());
+        telemetry.addData("Lift 2 Position", intakeLift2.getPosition());
     }
 
     private double oneRotation = ((1.0/2.25)/8.0);
     private double oneDegree = (oneRotation/360);
 
-    public void setGateAngle(double angle){
+    /*public void setGateAngle(double angle){
         intakeGate.setPosition(angle*oneDegree);
     }
+    */
 
     public void setIntakePower(double power){
         intakeMotor.setPower(power);
@@ -98,6 +103,27 @@ public class Intake implements Subsystem {
         slideMotor.setTargetPosition(target);
     }
 
+    public void setIntakePosition(double pos){
+        Range.clip(pos, 0, 1);
+        intakeLift1.setPosition(pos);
+        intakeLift2.setPosition(1-pos);
+    }
+
+
+    public void intakeUp(){
+        setIntakePosition(0);
+    }
+
+    public void intakeDown(){
+        setIntakePosition(0.95);
+    }
+
+    public void intakeCenter(){
+        setIntakePosition(0.35);
+    }
+
+    /*
+
     public void gateDown(){
         setGatePosition(gateDownPos);
     }
@@ -106,9 +132,11 @@ public class Intake implements Subsystem {
         setGatePosition(gateUpPos);
     }
 
+
     public void setGatePosition(double position){
         intakeGate.setPosition(position);
     }
+    */
 
     private void threadSleep(long milliseconds){
         try {

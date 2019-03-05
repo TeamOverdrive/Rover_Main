@@ -21,8 +21,8 @@ public class Lift implements Subsystem {
     private DcMotor leftLift, rightLift;
     private Servo liftLock;
 
-    public double lockPosition = 0.8;
-    public double unlockPosition = 0.2;
+    public double lockPosition = 0.2;
+    public double unlockPosition = 0.8;
 
     private static final double brakePower = 0;
 
