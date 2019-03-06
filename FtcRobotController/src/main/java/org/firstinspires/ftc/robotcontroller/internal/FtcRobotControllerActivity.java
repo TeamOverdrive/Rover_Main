@@ -640,7 +640,6 @@ public class FtcRobotControllerActivity extends Activity
           }
         : null);
     }
-      FtcDashboard.attachEventLoop(eventLoop);
   }
 
   private void requestRobotSetup(@Nullable Runnable runOnComplete) {
