@@ -37,7 +37,7 @@ public class Crater_Sample extends Team753Linear{
         //Start Camera
         enableDetector();
 
-        //Drive Forward
+        //DriveBase Forward
         Robot.getDrive().encoderDrive(0.8, 12, 12, 3, this);
 
         //Lower lift
@@ -55,7 +55,7 @@ public class Crater_Sample extends Team753Linear{
             //drive to wall
             Robot.getDrive().encoderDrive(0.75, 45, 45, 4, this);
 
-            //Drive to Depot
+            //DriveBase to Depot
             Robot.getDrive().encoderTurnTest(50, 0.6, 4, this);
             Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
 
@@ -76,7 +76,7 @@ public class Crater_Sample extends Team753Linear{
                 Robot.getDrive().encoderTurn(135, 0.8, 2, this);
                 Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
 
-                //Drive to Depot
+                //DriveBase to Depot
                 Robot.getDrive().encoderTurnTest(45, 0.6, 4, this);
                 Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
 
@@ -97,7 +97,7 @@ public class Crater_Sample extends Team753Linear{
                     Robot.getDrive().encoderTurn(45, 0.65, 2, this);
                     Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
 
-                    //Drive to Depot
+                    //DriveBase to Depot
                     Robot.getDrive().encoderTurnTest(50, 0.6, 4, this);
                     Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
 
@@ -114,7 +114,7 @@ public class Crater_Sample extends Team753Linear{
                     Robot.getDrive().encoderTurn(45, 0.65, 30, this);
                     Robot.getDrive().encoderDrive(0.8, 46, 46, 4, this);
 
-                    //Drive to Depot
+                    //DriveBase to Depot
                     Robot.getDrive().encoderTurnTest(50, 0.6, 4, this);
                     Robot.getDrive().encoderDrive(0.8, 40, 40, 3, this);
 

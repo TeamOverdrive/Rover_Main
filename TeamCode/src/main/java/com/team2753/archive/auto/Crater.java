@@ -45,7 +45,7 @@ public class Crater extends Team753Linear{
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
 
-        //Drive Forward
+        //DriveBase Forward
         Robot.getDrive().encoderDrive(0.5, 16, 16, 4, this);
 
         //Lower lift
@@ -82,7 +82,7 @@ public class Crater extends Team753Linear{
         Robot.getDrive().encoderDrive(0.75, distanceRemaining, distanceRemaining, 4, this);
         */
 
-        //Drive to Depot
+        //DriveBase to Depot
         Robot.getDrive().encoderTurn(90, .6, 4, this);
 
         Robot.getDrive().encoderDrive(.7, 46, 46, 4, this);

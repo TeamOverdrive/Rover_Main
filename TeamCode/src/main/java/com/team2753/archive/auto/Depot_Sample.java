@@ -34,7 +34,7 @@ public class Depot_Sample extends Team753Linear{
         //Start Camera
         enableDetector();
 
-        //Drive Forward
+        //DriveBase Forward
         Robot.getDrive().encoderDrive(0.8, 14, 14, 3, this);
 
         //Lower lift
@@ -98,7 +98,7 @@ public class Depot_Sample extends Team753Linear{
                 Robot.getIntake().setIntakePower(0);
 
 
-                //Drive to Crater
+                //DriveBase to Crater
                 Robot.getDrive().encoderDrive(0.9, -55, -55, 4, this);
             }
         }

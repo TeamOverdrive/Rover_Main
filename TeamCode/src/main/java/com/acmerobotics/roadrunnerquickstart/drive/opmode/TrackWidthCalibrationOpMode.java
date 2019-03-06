@@ -16,7 +16,7 @@ import com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveREV;
  * pair of wheels on opposite sides of the robot). This is required for the robot turn properly
  * during open-loop control.
  *
- * Note: this routine is *deprecated*; NewTrackWidthCalibrationOpMode is recommended instead.
+ * Note: this routine is *deprecated*; TrackWidthCalibration is recommended instead.
  */
 @Config
 @Deprecated

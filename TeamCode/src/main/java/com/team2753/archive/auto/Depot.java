@@ -40,7 +40,7 @@ public class Depot extends Team753Linear{
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
 
-        //Drive Forward
+        //DriveBase Forward
         Robot.getDrive().encoderDrive(0.7, 72, 72, 5, this);
 
         //Lower lift
@@ -86,7 +86,7 @@ public class Depot extends Team753Linear{
 
         Robot.getDrive().encoderDrive(0.75, distanceRemaining, distanceRemaining, 4, this);
         */
-        //Drive to Depot
+        //DriveBase to Depot
 
         //Deposit Team Marker
         //Robot.getMarker().deploy();
@@ -98,7 +98,7 @@ public class Depot extends Team753Linear{
         Robot.getIntake().setIntakePower(0);
 
 
-        //Drive to Crater
+        //DriveBase to Crater
         Robot.getDrive().encoderTurn(135, 0.8, 3, this);
         Robot.getDrive().encoderDrive(0.8, 50, 50, 4, this);
 

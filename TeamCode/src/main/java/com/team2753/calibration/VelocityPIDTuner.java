@@ -1,4 +1,4 @@
-package com.acmerobotics.roadrunnerquickstart.drive.opmode;
+package com.team2753.calibration;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -9,15 +9,15 @@ import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.NanoClock;
+import com.acmerobotics.roadrunnerquickstart.drive.DriveConstants;
+import com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveBase;
+import com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveREV;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
-
-import com.acmerobotics.roadrunnerquickstart.drive.DriveConstants;
-import com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveBase;
-import com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveREV;
+import com.team2753.subsystems.DriveBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +33,9 @@ import java.util.List;
  * PID coefficients (it's highly suggested to leave F at its default value) like any normal PID
  * controller. Once you've found a satisfactory set of gains, add them to your drive class init.
  */
-@Disabled
-@Autonomous
-public class DriveVelocityPIDTuner extends LinearOpMode {
+@Config
+@Autonomous(name="PID_Tuner")
+public class VelocityPIDTuner extends LinearOpMode {
     public static PIDCoefficients MOTOR_PID = new PIDCoefficients();
     public static double DISTANCE = 72;
 
@@ -50,7 +50,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
-        SampleMecanumDriveBase drive = new SampleMecanumDriveREV(hardwareMap);
+        DriveBase drive = new com.team2753.subsystems.Drive(hardwareMap);
 
         PIDCoefficients currentCoeffs = drive.getPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
         MOTOR_PID = pidCopy(currentCoeffs);

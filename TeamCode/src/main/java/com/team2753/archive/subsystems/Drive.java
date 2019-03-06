@@ -45,7 +45,7 @@ public class Drive implements Subsystem {
 
     /*
     TODO: Get roadrunner working after Jan 5 for 80+ auto
-    public Drive(double trackWidth, NanoClock clock) {
+    public DriveBase(double trackWidth, NanoClock clock) {
         super(trackWidth, clock);
     }
     */

@@ -32,7 +32,7 @@ public class Land extends Team753Linear{
         while(Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
 
-        //Drive Forward
+        //DriveBase Forward
         Robot.getDrive().encoderDrive(0.5, 6, 6, 4, this);
 
         //Lower lift
