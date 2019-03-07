@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
@@ -24,6 +25,7 @@ import java.util.concurrent.BlockingQueue;
  */
 @Autonomous
 @Config
+@Disabled
 public class VuforiaStreamOpMode extends LinearOpMode {
 
     // TODO: fill in

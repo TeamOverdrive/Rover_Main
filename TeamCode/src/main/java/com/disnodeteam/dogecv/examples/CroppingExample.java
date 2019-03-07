@@ -2,6 +2,7 @@ package com.disnodeteam.dogecv.examples;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.detectors.DogeCVDetector;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -14,6 +15,7 @@ import org.opencv.core.Point;
  * This class is useful for finding the size you want to crop your camera image to.
  */
 @TeleOp(name = "Cropping Example", group = "DogeCV")
+@Disabled
 public class CroppingExample extends OpMode {
 
     //This is an example of an anonymous implementation of the DogeCV Detector

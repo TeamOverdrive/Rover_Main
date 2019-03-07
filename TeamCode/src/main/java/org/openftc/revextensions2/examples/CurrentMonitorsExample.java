@@ -21,6 +21,7 @@
 
 package org.openftc.revextensions2.examples;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -29,6 +30,7 @@ import org.openftc.revextensions2.ExpansionHubMotor;
 import org.openftc.revextensions2.RevExtensions2;
 
 @TeleOp(group = "RevExtensions2Examples")
+@Disabled
 public class CurrentMonitorsExample extends OpMode
 {
     ExpansionHubMotor motor0, motor1, motor2, motor3;

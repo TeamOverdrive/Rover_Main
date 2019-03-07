@@ -32,12 +32,15 @@ package com.disnodeteam.dogecv.examples;
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.opencv.core.Point;
+
 
 @TeleOp(name="Gold Align Example", group="DogeCV")
-
+//@Disabled
 public class GoldAlignExample extends OpMode
 {
     // Detector object
@@ -64,6 +67,10 @@ public class GoldAlignExample extends OpMode
 
         detector.ratioScorer.weight = 5; //
         detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        //Cropping
+        detector.cropTLCorner = new Point(200, 200); //Sets the top left corner of the new image, in pixel (x,y) coordinates
+        detector.cropBRCorner = new Point(400, 400);
 
         detector.enable(); // Start the detector!
 

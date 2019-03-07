@@ -87,11 +87,11 @@ public class Teleop extends Team753Linear{
             /*Lift Controls*/
 
 
-            if(Math.abs(gamepad2.right_stick_y)<= 0.05){
+            if(gamepad1.right_trigger<= 0.05&&gamepad1.left_trigger<= 0.05){
 
-                if (gamepad2.dpad_up) {
+                if (gamepad1.y) {
                     Robot.getLift().setPower(0.75);
-                } else if (gamepad2.dpad_down) {
+                } else if (gamepad2.a) {
                     Robot.getLift().setPower(-0.6);
                 } else {
                     Robot.getLift().setPower(0);
@@ -100,17 +100,28 @@ public class Teleop extends Team753Linear{
 
                 if(!liftOverride){
                     //autostuff
+                    //TODO: automate lift between 200 (transfer position) and hang and dumping
                 }
             }
             else{
                 liftOverride = true;
-                float liftThrottle = gamepad2.right_stick_y;
-                //Clip
-                liftThrottle = Range.clip(liftThrottle, -1, 1);
-                //Scale
-                liftThrottle = (float) scaleInput(liftThrottle);
-                //Invert
-                liftThrottle = liftThrottle * -1;
+                float liftThrottle;
+                if(gamepad1.right_trigger<=0.05) {
+                     liftThrottle = gamepad1.left_trigger;
+                    //Clip
+                    liftThrottle = Range.clip(liftThrottle, 0, 1);
+                    //Scale
+                    liftThrottle = (float) scaleInput(liftThrottle);
+                    //Invert
+                    liftThrottle = liftThrottle * -1;
+                }
+                else{
+                    liftThrottle = gamepad1.right_trigger;
+                    //Clip
+                    liftThrottle = Range.clip(liftThrottle, 0, 1);
+                    //Scale
+                    liftThrottle = (float) scaleInput(liftThrottle);
+                }
                 //Apply power to motor
 
                 if(Robot.getLift().isLocked()) {
@@ -132,6 +143,7 @@ public class Teleop extends Team753Linear{
 
                 if(!intakeOverride){
                     //autostuff
+                    //TODO intake automation stuff
                 }
             }
             else{
@@ -150,10 +162,11 @@ public class Teleop extends Team753Linear{
             //gate
             if(gamepad2.a)
                 Robot.getIntake().intakeDown();
-            if(gamepad2.x)
-                Robot.getIntake().intakeCenter();
-            if(gamepad2.y)
+            else if(gamepad2.y)
                 Robot.getIntake().intakeUp();
+            else
+                Robot.getIntake().intakeCenter();
+
 
             /*
             float intakeThrottle = gamepad2.left_stick_y;

@@ -1,4 +1,4 @@
-package com.team2753.calibration;
+package com.team2753.test;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -10,10 +10,7 @@ import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.acmerobotics.roadrunnerquickstart.drive.DriveConstants;
-import com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveBase;
-import com.acmerobotics.roadrunnerquickstart.drive.SampleMecanumDriveREV;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -34,7 +31,7 @@ import java.util.List;
  * controller. Once you've found a satisfactory set of gains, add them to your drive class init.
  */
 @Config
-@Autonomous(name="PID_Tuner")
+@Autonomous(name="PID_Tuner Opmode")
 public class VelocityPIDTuner extends LinearOpMode {
     public static PIDCoefficients MOTOR_PID = new PIDCoefficients();
     public static double DISTANCE = 72;
@@ -56,7 +53,7 @@ public class VelocityPIDTuner extends LinearOpMode {
         MOTOR_PID = pidCopy(currentCoeffs);
         dashboard.updateConfig();
 
-        RobotLog.i("Initial motor PID coefficients: " + MOTOR_PID);
+        RobotLog.i("========================== Initial motor PID coefficients: " + MOTOR_PID+ " ==========================");
 
         NanoClock clock = NanoClock.system();
 
@@ -81,9 +78,9 @@ public class VelocityPIDTuner extends LinearOpMode {
         while (!isStopRequested()) {
             // update the coefficients if necessary
             if (!pidEquals(currentCoeffs, MOTOR_PID)) {
-                RobotLog.i("Updated motor PID coefficients: " + MOTOR_PID);
                 currentCoeffs = pidCopy(MOTOR_PID);
                 drive.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_PID);
+                RobotLog.i("========================== Updated motor PID coefficients: " + MOTOR_PID + " ==========================");
             }
 
             // calculate and set the motor power
@@ -117,6 +114,12 @@ public class VelocityPIDTuner extends LinearOpMode {
                     telemetry.addData("velocity" + i, syntheticVelocities.get(i));
                     telemetry.addData("error" + i, motionState.getV() - syntheticVelocities.get(i));
                 }
+                telemetry.addData("kP", MOTOR_PID.kP);
+                telemetry.addData("kI", MOTOR_PID.kI);
+                telemetry.addData("kD", MOTOR_PID.kD);
+                telemetry.addData("current kP", currentCoeffs.kP);
+                telemetry.addData("current kI", currentCoeffs.kI);
+                telemetry.addData("current kD", currentCoeffs.kD);
                 telemetry.update();
             }
             lastWheelPositions = wheelPositions;
