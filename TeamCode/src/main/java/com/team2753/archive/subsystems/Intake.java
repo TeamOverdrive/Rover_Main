@@ -1,8 +1,10 @@
 package com.team2753.archive.subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import com.team2753.archive.Team753Linear;
@@ -19,6 +21,8 @@ public class Intake implements Subsystem {
     private DcMotor intakeMotor;
     private DcMotor slideMotor;
     private Servo intakeLift1, intakeLift2;
+
+    DigitalChannel touch;
 
     private double gateDownPos = 1;
     private double gateUpPos = 0.15;
@@ -40,16 +44,20 @@ public class Intake implements Subsystem {
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        touch = linearOpMode.hardwareMap.get(DigitalChannel.class, "slideStop");
+
+        touch.setMode(DigitalChannel.Mode.INPUT);
+
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //gateDown();
 
         if(auto){
-            setSlidePower(-0.6);
-            threadSleep(750);
+            while(!getTouchPressed()) {
+                setSlidePower(-0.6);
+            }
             setSlidePower(0);
             zeroSensors();
-            threadSleep(100);
         }
 
         //TODO: add intake motors
@@ -75,6 +83,7 @@ public class Intake implements Subsystem {
         telemetry.addData("Intake Position", slideMotor.getCurrentPosition());
         telemetry.addData("Lift 1 Position", intakeLift1.getPosition());
         telemetry.addData("Lift 2 Position", intakeLift2.getPosition());
+        telemetry.addData("Touch State", getTouchState());
     }
 
     private double oneRotation = ((1.0/2.25)/8.0);
@@ -123,6 +132,10 @@ public class Intake implements Subsystem {
         setIntakePosition(0.35);
     }
 
+    public void intakeAngledDown(){
+        setIntakePosition(0.65);
+    }
+
     /*
 
     public void gateDown(){
@@ -139,6 +152,15 @@ public class Intake implements Subsystem {
     }
     */
 
+    public boolean getTouchState(){
+        return touch.getState();
+    }
+
+    public boolean getTouchPressed(){
+        return !getTouchState();
+    }
+
+    @Deprecated
     private void threadSleep(long milliseconds){
         try {
             Thread.sleep(milliseconds);

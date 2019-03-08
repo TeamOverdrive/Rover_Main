@@ -114,6 +114,10 @@ public class Lift implements Subsystem {
         leftLift.setMode(runMode);
     }
 
+    public DcMotor.RunMode getMode(){
+        return rightLift.getMode();
+    }
+
     public void setTarget(int target){
         rightLift.setTargetPosition(target);
         leftLift.setTargetPosition(target);
@@ -178,4 +182,7 @@ public class Lift implements Subsystem {
         }
     }
 
+    public boolean isBusy() {
+        return leftLift.isBusy() || rightLift.isBusy();
+    }
 }

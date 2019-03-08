@@ -10,7 +10,7 @@ import static com.team2753.archive.Constants.COUNTS_PER_INCH;
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/15/2018.
  */
 
-@Autonomous(name = "Crater Sample")
+@Autonomous(name = "Crater")
 public class Crater_Sample extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {

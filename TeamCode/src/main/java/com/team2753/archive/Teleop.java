@@ -1,7 +1,10 @@
 package com.team2753.archive;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
+import com.team2753.archive.subsystems.Robot;
 
 import static com.team2753.archive.libs.MathUtil.scaleInput;
 
@@ -13,7 +16,8 @@ import static com.team2753.archive.libs.MathUtil.scaleInput;
 @TeleOp(name = "Teleop", group = "0_Main")
 public class Teleop extends Team753Linear{
 
-    boolean liftOverride, intakeOverride = true;
+    boolean liftOverride = false;
+    boolean intakeOverride = true;
 
     @Override
     public void runOpMode(){
@@ -62,12 +66,26 @@ public class Teleop extends Team753Linear{
                 Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
             }
 
-            if(gamepad2.left_bumper)
-                Robot.getIntake().setIntakePower(-0.6);
-            else if(gamepad2.right_bumper)
-                Robot.getIntake().setIntakePower(1);
-            else
-                Robot.getIntake().setIntakePower(0);
+            if(!Robot.getIntake().getTouchPressed()) {
+                if (gamepad2.left_bumper)
+                    Robot.getIntake().setIntakePower(-0.6);
+                else if (gamepad2.right_bumper)
+                    Robot.getIntake().setIntakePower(1);
+                else
+                    Robot.getIntake().setIntakePower(0);
+
+                //intake position
+                if (gamepad2.a)
+                    Robot.getIntake().intakeDown();
+                else if (gamepad2.y)
+                    Robot.getIntake().intakeUp();
+                else
+                    Robot.getIntake().intakeCenter();
+            }
+            else{
+                Robot.getIntake().intakeUp();
+                Robot.getIntake().setIntakePower(-0.5);
+            }
 
 
             /*
@@ -90,17 +108,25 @@ public class Teleop extends Team753Linear{
             if(gamepad1.right_trigger<= 0.05&&gamepad1.left_trigger<= 0.05){
 
                 if (gamepad1.y) {
-                    Robot.getLift().setPower(0.75);
-                } else if (gamepad2.a) {
+                    Robot.getLift().setPower(0.7);
+                    liftOverride = true;
+                } else if (gamepad1.a) {
                     Robot.getLift().setPower(-0.6);
-                } else {
+                    liftOverride = true;
+                } else if(!Robot.getLift().isBusy()){
                     Robot.getLift().setPower(0);
                     liftOverride = false;
                 }
 
                 if(!liftOverride){
-                    //autostuff
-                    //TODO: automate lift between 200 (transfer position) and hang and dumping
+                    if(gamepad1.x){
+                        //liftOverride = false;
+                        Robot.getLift().setTarget(400);
+                    }
+                    else if (gamepad1.b){
+                        //liftOverride = false;
+                        Robot.getLift().setTarget(2300);
+                    }
                 }
             }
             else{
@@ -129,6 +155,16 @@ public class Teleop extends Team753Linear{
                 }
             }
 
+            if(liftOverride){
+                if(Robot.getLift().getMode() != DcMotorEx.RunMode.RUN_USING_ENCODER){
+                    Robot.getLift().setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+            }
+            else {
+                Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Robot.getLift().setPower(1);
+            }
+
             //slide
             if(Math.abs(gamepad2.left_stick_y)<= 0.05){
 
@@ -143,7 +179,6 @@ public class Teleop extends Team753Linear{
 
                 if(!intakeOverride){
                     //autostuff
-                    //TODO intake automation stuff
                 }
             }
             else{
@@ -159,13 +194,7 @@ public class Teleop extends Team753Linear{
                 Robot.getIntake().setSlidePower(intakeThrottle);
             }
 
-            //gate
-            if(gamepad2.a)
-                Robot.getIntake().intakeDown();
-            else if(gamepad2.y)
-                Robot.getIntake().intakeUp();
-            else
-                Robot.getIntake().intakeCenter();
+
 
 
             /*
@@ -185,12 +214,6 @@ public class Teleop extends Team753Linear{
                 Robot.getLift().lock();
             if(gamepad1.left_bumper)
                 Robot.getLift().unlock();
-
-
-            if(gamepad1.right_bumper)
-                Robot.getMarker().retract();
-            if(gamepad1.left_bumper)
-                Robot.getMarker().deploy();
 
             updateTelemetry();
         }

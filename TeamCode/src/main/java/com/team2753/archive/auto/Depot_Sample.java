@@ -7,16 +7,15 @@ import com.team2753.archive.Team753Linear;
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 12/15/2018.
  */
-@Autonomous(name = "Depot Sample")
+@Autonomous(name = "Depot")
 public class Depot_Sample extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
         waitForStart("Crater Autonomous", true);
 
-        //Flip phone
-
         //Deploy intake
+        Robot.getIntake().intakeCenter();
 
         //Land
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
