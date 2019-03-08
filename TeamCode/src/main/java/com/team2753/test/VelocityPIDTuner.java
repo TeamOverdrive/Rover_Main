@@ -50,7 +50,8 @@ public class VelocityPIDTuner extends LinearOpMode {
         DriveBase drive = new com.team2753.subsystems.Drive(hardwareMap);
 
         PIDCoefficients currentCoeffs = drive.getPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
-        MOTOR_PID = pidCopy(currentCoeffs);
+        //MOTOR_PID = pidCopy(currentCoeffs);
+        pidCopy(currentCoeffs, MOTOR_PID);
         dashboard.updateConfig();
 
         RobotLog.i("========================== Initial motor PID coefficients: " + MOTOR_PID+ " ==========================");
@@ -78,9 +79,11 @@ public class VelocityPIDTuner extends LinearOpMode {
         while (!isStopRequested()) {
             // update the coefficients if necessary
             if (!pidEquals(currentCoeffs, MOTOR_PID)) {
-                currentCoeffs = pidCopy(MOTOR_PID);
-                drive.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_PID);
                 RobotLog.i("========================== Updated motor PID coefficients: " + MOTOR_PID + " ==========================");
+                //currentCoeffs = pidCopy(MOTOR_PID);
+                pidCopy(MOTOR_PID, currentCoeffs);
+                drive.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_PID);
+
             }
 
             // calculate and set the motor power
@@ -114,9 +117,9 @@ public class VelocityPIDTuner extends LinearOpMode {
                     telemetry.addData("velocity" + i, syntheticVelocities.get(i));
                     telemetry.addData("error" + i, motionState.getV() - syntheticVelocities.get(i));
                 }
-                telemetry.addData("kP", MOTOR_PID.kP);
-                telemetry.addData("kI", MOTOR_PID.kI);
-                telemetry.addData("kD", MOTOR_PID.kD);
+                telemetry.addData("dash kP", MOTOR_PID.kP);
+                telemetry.addData("dash kI", MOTOR_PID.kI);
+                telemetry.addData("dash kD", MOTOR_PID.kD);
                 telemetry.addData("current kP", currentCoeffs.kP);
                 telemetry.addData("current kI", currentCoeffs.kI);
                 telemetry.addData("current kD", currentCoeffs.kD);
@@ -128,10 +131,12 @@ public class VelocityPIDTuner extends LinearOpMode {
 
     // TODO: integrate these methods directly into the next Road Runner release
     private static boolean pidEquals(PIDCoefficients coeff1, PIDCoefficients coeff2) {
-        return coeff1.kP == coeff2.kP && coeff1.kI == coeff1.kI && coeff1.kD == coeff2.kD;
+        return coeff1.kP == coeff2.kP && coeff1.kI == coeff2.kI && coeff1.kD == coeff2.kD;
     }
 
-    private static PIDCoefficients pidCopy(PIDCoefficients coeff) {
-        return new PIDCoefficients(coeff.kP, coeff.kI, coeff.kD);
+    private static void pidCopy(PIDCoefficients source, PIDCoefficients dest) {
+        dest.kP = source.kP;
+        dest.kI = source.kI;
+        dest.kD = source.kD;
     }
 }
