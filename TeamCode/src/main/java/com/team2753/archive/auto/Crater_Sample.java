@@ -35,7 +35,7 @@ public class Crater_Sample extends Team753Linear{
         Robot.getLift().setPower(0);
 
         //Start Camera
-        enableDetector();
+        //enableDetector();
 
         //DriveBase Forward
         Robot.getDrive().encoderDrive(0.8, 12, 12, 3, this);
