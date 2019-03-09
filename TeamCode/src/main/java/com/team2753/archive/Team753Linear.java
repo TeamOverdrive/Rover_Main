@@ -11,6 +11,7 @@ import com.team2753.archive.libs.VuMark;
 import com.team2753.archive.subsystems.Robot;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.opencv.core.Point;
 
 /**
  * Created by David Zheng | FTC 2753 Team Overdrive on 9/27/2018.
@@ -67,13 +68,6 @@ public abstract class Team753Linear extends LinearOpMode{
 
     public void waitForStart(String OpModeName, boolean auto){
 
-        /*
-        dashboardTelemetry.setAutoClear(true);
-        status = dashboardTelemetry.addData("Status", "Initializing...");
-        Telemetry.Item currentOpMode = dashboardTelemetry.addData("Running", OpModeName);
-        dashboardTelemetry.update();
-        */
-
         telemetry.setAutoClear(true);
         status = telemetry.addData("Status", "Initializing...");
         telemetry.addData("Running", OpModeName);
@@ -87,9 +81,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
             initGoldDetector();
 
-            //Relic Recovery Vuforia Jewel Detection removed. refer to Relic_Main for code
-
-            //TODO: Mineral Position Loop here when SamplingOrderDetector is stablized
+            //TODO: vision here(?)
 
         }
         SetStatus("Initialized, Waiting for Start");
@@ -161,6 +153,10 @@ public abstract class Team753Linear extends LinearOpMode{
 
         detector.ratioScorer.weight = 5;
         detector.ratioScorer.perfectRatio = 1.0;
+
+        //Cropping
+        detector.cropTLCorner = new Point(0, 175); //Sets the top left corner of the new image, in pixel (x,y) coordinates
+        detector.cropBRCorner = new Point(639, 200);
     }
 
     public void enableDetector(){
@@ -173,13 +169,6 @@ public abstract class Team753Linear extends LinearOpMode{
 
     public boolean goldAligned(){return detector.getAligned();}
 
-    public void sampleGoldMineral(){
-        Robot.getDrive().encoderDrive(0.5, -18, -18, 6, this);
-        Robot.getDrive().zeroSensors();
-        while(!goldAligned()){
-
-        }
-    }
 
     private int vi = 0;
     public Gold_Relative_Position getGoldRelativePosition(){
