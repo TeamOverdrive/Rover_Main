@@ -45,13 +45,6 @@ public abstract class Team753Linear extends LinearOpMode{
         RIGHT
     }
 
-    public enum Gold_Relative_Position{
-        LEFT,
-        RIGHT,
-        ALIGNED,
-        UNKNOWN
-    }
-
     protected Gold_Position goldPosition  = null;
 
     private static ElapsedTime timer1 = new ElapsedTime();
@@ -70,6 +63,7 @@ public abstract class Team753Linear extends LinearOpMode{
 
         telemetry.setAutoClear(true);
         status = telemetry.addData("Status", "Initializing...");
+        //telemetry.addLine("Initializing...");
         telemetry.addData("Running", OpModeName);
 
         Robot.init(this, auto);
@@ -82,7 +76,25 @@ public abstract class Team753Linear extends LinearOpMode{
             initGoldDetector();
 
             //TODO: vision here(?)
-
+            enableDetector();
+            while(!isStarted() && !isStopRequested()){
+                if(goldVisible()){
+                    if(goldAligned()) {
+                        goldPosition = Gold_Position.LEFT;
+                        telemetry.addLine("Gold Left");
+                    }
+                    else {
+                        goldPosition = Gold_Position.CENTER;
+                        telemetry.addLine("Gold Center");
+                    }
+                }
+                else {
+                    goldPosition = Gold_Position.RIGHT;
+                    telemetry.addLine("Gold Right");
+                }
+                telemetry.update();
+            }
+            disableDetector();
         }
         SetStatus("Initialized, Waiting for Start");
         //for now i have a loop to keep pinging the phone so it doesn't switch to teleop
@@ -90,6 +102,7 @@ public abstract class Team753Linear extends LinearOpMode{
             telemetry.update();
         }
         waitForStart();
+
         timer1.reset();
         SetStatus("Running OpMode");
         RobotLog.v("================ Running OpMode =============");
@@ -131,8 +144,6 @@ public abstract class Team753Linear extends LinearOpMode{
         Robot.stop();
         setTimer1(10);
         requestOpModeStop();
-        if(isAuto)
-            detector.disable();
     }
 
     public void initGoldDetector(){
@@ -163,12 +174,17 @@ public abstract class Team753Linear extends LinearOpMode{
         detector.enable();
     }
 
+    public void disableDetector(){
+        detector.disable();
+    }
+
     public double getGoldPos(){return detector.getXPosition();}
 
     public boolean goldVisible(){return detector.isFound();}
 
     public boolean goldAligned(){return detector.getAligned();}
 
+    /*
 
     private int vi = 0;
     public Gold_Relative_Position getGoldRelativePosition(){
@@ -195,6 +211,7 @@ public abstract class Team753Linear extends LinearOpMode{
         return result;
 
     }
+    */
 
     public void setTimer1(long periodMs) {
         timer1.reset();

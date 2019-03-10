@@ -53,9 +53,6 @@ public class Intake implements Subsystem {
         //gateDown();
 
         if(auto){
-            while(!getTouchPressed()) {
-                setSlidePower(-0.6);
-            }
             setSlidePower(0);
             zeroSensors();
         }
@@ -80,9 +77,9 @@ public class Intake implements Subsystem {
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-        telemetry.addData("Intake Position", slideMotor.getCurrentPosition());
-        telemetry.addData("Lift 1 Position", intakeLift1.getPosition());
-        telemetry.addData("Lift 2 Position", intakeLift2.getPosition());
+        telemetry.addData("Slide Position", slideMotor.getCurrentPosition());
+        telemetry.addData("Intake Servo 1 Position", intakeLift1.getPosition());
+        telemetry.addData("Intake Servo 2 Position", intakeLift2.getPosition());
         telemetry.addData("Touch State", getTouchState());
     }
 
@@ -133,7 +130,7 @@ public class Intake implements Subsystem {
     }
 
     public void intakeAngledDown(){
-        setIntakePosition(0.65);
+        setIntakePosition(0.75);
     }
 
     /*

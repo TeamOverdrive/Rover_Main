@@ -26,12 +26,6 @@ import static java.lang.Math.PI;
  */
 public class Drive implements Subsystem {
 
-
-    //TODO: Compare to last year's drive class to see if i'm missing anything important
-    //TODO: Add gyro turns
-
-
-
     public static final MotorConfigurationType MOTOR_CONFIG = MotorConfigurationType.getMotorType(NeveRest40Gearmotor.class);
 
     private static final double TICKS_PER_REV = MOTOR_CONFIG.getTicksPerRev();
@@ -69,16 +63,15 @@ public class Drive implements Subsystem {
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        /*
         rightFront.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(kP,kI,kD,0));
         rightBack.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(kP,kI,kD,0));
         leftFront.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(kP,kI,kD,0));
         rightBack.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(kP,kI,kD,0));
-
+*/
         if(auto){
-            imu = new RevIMU("imu", linearOpMode.hardwareMap);
-            imu_1 = new RevIMU("imu_1", linearOpMode.hardwareMap);
+            //imu = new RevIMU("imu", linearOpMode.hardwareMap);
+            //imu_1 = new RevIMU("imu_1", linearOpMode.hardwareMap);
             zeroSensors();
         }
     }
@@ -171,7 +164,7 @@ public class Drive implements Subsystem {
 
     //TODO: add gyro turns
 
-    public void basicRunToPosition(double speed, double leftInches, double rightInches, double timeoutS, Team753Linear linearOpMode) {
+    public void runToPosition(double speed, double leftInches, double rightInches, Team753Linear linearOpMode) {
         int newLeftTarget;
         int newRightTarget;
 
@@ -185,26 +178,11 @@ public class Drive implements Subsystem {
 
             // Turn On RUN_TO_POSITION
             setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            timeout.reset();
             setLeftRightPower(Math.abs(speed), Math.abs(speed));
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            while (linearOpMode.opModeIsActive() &&
-                    (timeout.seconds() < timeoutS) &&
-                    (leftBack.isBusy() || rightBack.isBusy() || leftFront.isBusy() || rightFront.isBusy())) {
-                linearOpMode.updateTelemetry();
-            }
-            // Stop all motion;
-            setLeftRightPower(0,0);
-
-            // Turn off RUN_TO_POSITION
-            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //  linearOpMode.sleep(250);   // optional pause after each move
         }
     }
+
+
 
     /**
      *

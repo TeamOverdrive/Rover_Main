@@ -12,7 +12,7 @@ public class Depot_Sample extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
 
-        waitForStart("Crater Autonomous", true);
+        waitForStart("Depot", true);
 
         //Deploy intake
         Robot.getIntake().intakeCenter();
@@ -30,19 +30,138 @@ public class Depot_Sample extends Team753Linear{
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);
 
-        //Start Camera
-        //enableDetector();
+        //Extend
+        Robot.getIntake().setSlideRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.getIntake().setSlideTarget(1000);
+        Robot.getIntake().setSlidePower(0.7);
 
-        //DriveBase Forward
-        Robot.getDrive().encoderDrive(0.8, 14, 14, 3, this);
+        //Drive Forward
+        Robot.getDrive().encoderDrive(0.7, 13.5, 13.5, 3, this);
 
         //Lower lift
         Robot.getLift().unlock();
-        Robot.getLift().setTarget(0);
+        Robot.getLift().setTarget(600);
         Robot.getLift().setPower(-0.75);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 100){}
+
+        //Extend out to drop team marker
+        while (Robot.getIntake().getSlidePosition() <= 800) {}
+
+        //Drop
+        Robot.getIntake().intakeAngledDown();
+        Robot.getIntake().setIntakePower(-0.6);
+        setTimer1(750);
+        Robot.getIntake().setIntakePower(0);
+        Robot.getIntake().intakeCenter();
+        Robot.getIntake().setSlideTarget(0);
+        Robot.getIntake().setSlidePower(0.85);
+
+        while(Robot.getIntake().getSlidePosition()>= 50){}
+        Robot.getIntake().setSlidePower(0);
+        if(Robot.getLift().getAveragePosition()<=450){
+            Robot.getLift().setPower(0);
+        }
+
+
+
+        //sample gold mineral
+        switch(goldPosition){
+            case LEFT:
+                Robot.getDrive().encoderTurn(45, 0.8, 3, this);
+                break;
+            case CENTER:
+                break;
+            case RIGHT:
+                Robot.getDrive().encoderTurn(-45, 0.8, 3, this);
+                break;
+                default:
+                    break;
+        }
+
+        if(Robot.getLift().getAveragePosition()<=450){
+            Robot.getLift().setPower(0);
+        }
+
+        Robot.getIntake().intakeDown();
+        Robot.getIntake().setIntakePower(1);
+        setTimer1(500);
+        Robot.getIntake().setSlideTarget(800);
+        Robot.getIntake().setSlidePower(0.8);
+        while (Robot.getIntake().getSlidePosition() <= 750) {}
+        Robot.getIntake().setSlideTarget(250);
+        Robot.getIntake().setSlidePower(0.85);
+        while(Robot.getIntake().getSlidePosition()>= 300){}
+        Robot.getIntake().setSlidePower(0);
+        Robot.getIntake().setSlideTarget(950);
+        Robot.getIntake().setSlidePower(0.8);
+        while (Robot.getIntake().getSlidePosition() <= 800) {}
+        Robot.getIntake().setSlideTarget(-50);
+        Robot.getIntake().setSlidePower(0.85);
+        while(Robot.getIntake().getSlidePosition()>= 0){}
+        Robot.getIntake().setSlidePower(0);
+
+        Robot.getIntake().intakeCenter();
+        Robot.getIntake().setIntakePower(0.4);
+
+        switch(goldPosition){
+            case LEFT:
+                Robot.getDrive().encoderTurn(-45, 0.8, 3, this);
+                break;
+            case CENTER:
+                break;
+            case RIGHT:
+                Robot.getDrive().encoderTurn(45, 0.8, 3, this);
+                break;
+            default:
+                break;
+        }
+
+        Robot.getIntake().setIntakePower(0);
+        Robot.getIntake().intakeUp();
+        Robot.getIntake().setIntakePower(-0.5);
+
+        Robot.getDrive().encoderDrive(0.8, -10, -10, 3, this);
+
+        Robot.getIntake().setIntakePower(0);
+        Robot.getIntake().intakeCenter();
+
+        Robot.getLift().setTarget(3800);
+        Robot.getLift().setPower(0.8);
+        while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3500){}
+        setTimer1(1000);
+
+        Robot.getDrive().encoderDrive(0.8, 10, 10, 3, this);
+
+
+        Robot.getLift().setTarget(600);
+        Robot.getLift().setPower(-0.75);
+        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 800){}
         Robot.getLift().setPower(0);
 
+        //drive to crater/autocycles
+
+        Robot.getDrive().encoderTurn(90, 0.8, 3, this);
+
+        Robot.getIntake().intakeUp();
+
+        Robot.getDrive().encoderDrive(0.8, 45,45, 4, this);
+
+        Robot.getDrive().encoderTurn(45, 0.8, 3, this);
+
+        Robot.getIntake().intakeCenter();
+
+        Robot.getIntake().setSlideTarget(950);
+        Robot.getIntake().setSlidePower(0.8);
+        while (Robot.getIntake().getSlidePosition() <= 800) {}
+        Robot.getIntake().setSlidePower(0);
+
+        finalAction();
+    }
+}
+
+
+//old sampling code
+
+        /*
         if(goldAligned()){
 
             //Deposit Team Marker
@@ -101,7 +220,4 @@ public class Depot_Sample extends Team753Linear{
                 Robot.getDrive().encoderDrive(0.9, -55, -55, 4, this);
             }
         }
-
-        finalAction();
-    }
-}
+        */
