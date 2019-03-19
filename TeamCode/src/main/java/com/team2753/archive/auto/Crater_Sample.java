@@ -193,13 +193,13 @@ public class Crater_Sample extends Team753Linear{
         while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 800){}
         Robot.getLift().setPower(0);
 
-        /*
+
         Robot.getIntake().intakeCenter();
         Robot.getIntake().setSlideTarget(950);
         Robot.getIntake().setSlidePower(0.8);
         while (Robot.getIntake().getSlidePosition() <= 800) {}
         Robot.getIntake().setSlidePower(0);
-        */
+
 
         finalAction();
     }

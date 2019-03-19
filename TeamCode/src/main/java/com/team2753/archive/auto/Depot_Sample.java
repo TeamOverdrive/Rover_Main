@@ -117,7 +117,7 @@ public class Depot_Sample extends Team753Linear{
 
         Robot.getIntake().setIntakePower(0);
         Robot.getIntake().intakeUp();
-        Robot.getIntake().setIntakePower(-0.5);
+        Robot.getIntake().setIntakePower(-0.95);
 
         Robot.getDrive().encoderDrive(0.8, -10, -10, 3, this);
 
@@ -143,7 +143,7 @@ public class Depot_Sample extends Team753Linear{
 
         Robot.getIntake().intakeUp();
 
-        Robot.getDrive().encoderDrive(0.8, 45,45, 4, this);
+        Robot.getDrive().encoderDrive(0.8, 43,43, 4, this);
 
         Robot.getDrive().encoderTurn(45, 0.8, 3, this);
 
