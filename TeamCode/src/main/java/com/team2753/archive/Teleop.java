@@ -71,8 +71,14 @@ public class Teleop extends Team753Linear{
                 rightThrottle = Range.clip(rightThrottle, -1, 1);
 
                 // Scale the throttle values to make it easier to control the robot more precisely at slower speeds.
+                /*
                 leftThrottle = (float) scaleInput(leftThrottle);
                 rightThrottle = (float) scaleInput(rightThrottle);
+                */
+
+                leftThrottle = (float) Math.sin(((Math.PI)/2)*leftThrottle);
+                rightThrottle = (float) Math.sin(((Math.PI)/2)*rightThrottle);
+
 
                 Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
             }
