@@ -61,8 +61,6 @@ public class Depot_Sample extends Team753Linear{
             Robot.getLift().setPower(0);
         }
 
-
-
         //sample gold mineral
         switch(goldPosition){
             case LEFT:

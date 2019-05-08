@@ -74,7 +74,7 @@ public class Drive extends DriveBase{
         leftRear.setDirection(DcMotor.Direction.FORWARD);
 
         // TODO: set the tuned coefficients from VelocityPIDTuner if using RUN_USING_ENCODER
-        // setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, ...);
+        setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDCoefficients(24,10,8));
     }
 
     @Override

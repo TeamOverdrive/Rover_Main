@@ -75,7 +75,6 @@ public abstract class Team753Linear extends LinearOpMode{
 
             initGoldDetector();
 
-            //TODO: vision here(?)
             enableDetector();
             while(!isStarted() && !isStopRequested()){
                 if(goldVisible()){

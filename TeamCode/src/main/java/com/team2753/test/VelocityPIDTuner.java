@@ -117,12 +117,14 @@ public class VelocityPIDTuner extends LinearOpMode {
                     telemetry.addData("velocity" + i, syntheticVelocities.get(i));
                     telemetry.addData("error" + i, motionState.getV() - syntheticVelocities.get(i));
                 }
+                /*
                 telemetry.addData("dash kP", MOTOR_PID.kP);
                 telemetry.addData("dash kI", MOTOR_PID.kI);
                 telemetry.addData("dash kD", MOTOR_PID.kD);
                 telemetry.addData("current kP", currentCoeffs.kP);
                 telemetry.addData("current kI", currentCoeffs.kI);
                 telemetry.addData("current kD", currentCoeffs.kD);
+                */
                 telemetry.update();
             }
             lastWheelPositions = wheelPositions;
