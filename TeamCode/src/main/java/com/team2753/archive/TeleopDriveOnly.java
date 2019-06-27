@@ -13,16 +13,18 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "DriveOnly", group = "0_Main")
 public class TeleopDriveOnly extends Team753Linear{
 
-    private DcMotorEx leftFront, leftBack, rightBack, rightFront;
+    private DcMotor leftFront, leftBack, rightBack, rightFront;
 
     @Override
     public void runOpMode(){
 
         //waitForStart("Teleop", false);
-        rightBack = hardwareMap.get(DcMotorEx.class, "right_back");
-        rightFront = hardwareMap.get(DcMotorEx.class, "right_front");
-        leftBack = hardwareMap.get(DcMotorEx.class, "left_back");
-        leftFront = hardwareMap.get(DcMotorEx.class, "left_front");
+
+        rightBack = hardwareMap.get(DcMotor.class, "right_back");
+        rightFront = hardwareMap.get(DcMotor.class, "right_front");
+        leftBack = hardwareMap.get(DcMotor.class, "left_back");
+        leftFront = hardwareMap.get(DcMotor.class, "left_front");
+
 
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
