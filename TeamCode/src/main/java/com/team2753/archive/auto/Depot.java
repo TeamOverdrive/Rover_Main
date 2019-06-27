@@ -12,8 +12,7 @@ import static com.team2753.archive.Constants.COUNTS_PER_INCH;
  */
 
 @Autonomous(name = "Depot Auto", group = "0_auto")
-@Disabled
-@Deprecated
+
 public class Depot extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,6 +24,7 @@ public class Depot extends Team753Linear{
         //Deploy intake
 
         //Land
+        /*
         Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.getLift().setTarget(0);
         Robot.getLift().setPower(-0.65);
@@ -34,6 +34,7 @@ public class Depot extends Team753Linear{
                 Robot.getLift().unlock();
             }
         }
+        */
         Robot.getLift().setPower(0);
         Robot.getLift().setTarget(3800);
         Robot.getLift().setPower(1);

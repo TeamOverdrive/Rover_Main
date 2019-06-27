@@ -12,8 +12,7 @@ import static com.team2753.archive.Constants.COUNTS_PER_INCH;
  */
 
 @Autonomous(name = "Crater Auto", group = "0_auto")
-@Disabled
-@Deprecated
+
 public class Crater extends Team753Linear{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,9 +37,9 @@ public class Crater extends Team753Linear{
             */
         }
         Robot.getLift().setPower(-0.15);
-        Robot.getLift().unlock();
+        //Robot.getLift().unlock();
         Robot.getLift().setTarget(3800);
-        while(opModeIsActive() && Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
+        //while(opModeIsActive() && Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
         Robot.getLift().setPower(1);
         while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
         Robot.getLift().setPower(0);

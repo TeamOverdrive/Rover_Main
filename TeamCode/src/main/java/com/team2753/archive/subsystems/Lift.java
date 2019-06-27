@@ -16,11 +16,14 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
  * Created by David Zheng | FTC 2753 Team Overdrive on 9/27/2018.
  */
 public class Lift implements Subsystem {
+    private static final double HANGPOS = 0;//could be 1
+    private static final double SCOREPOS = 0.5;
 
     //Vars
 
-    private DcMotor leftLift, rightLift;
-    private Servo liftLock;
+    //shifter2 encoder is on the scoring slide does it even work lul
+    private DcMotor motor1, motor2;
+    private Servo shifter;
 
     public double lockPosition = 0.2;
     public double unlockPosition = 0.8;
@@ -29,29 +32,24 @@ public class Lift implements Subsystem {
 
     @Override
     public void init(Team753Linear linearOpMode, boolean auto) {
-        leftLift = (DcMotor) linearOpMode.hardwareMap.get("left_lift");
-        rightLift = (DcMotor) linearOpMode.hardwareMap.get("right_lift");
+        motor1 = (DcMotor) linearOpMode.hardwareMap.get("shifter1");
+        motor2 = (DcMotor) linearOpMode.hardwareMap.get("shifter2");
 
-        rightLift.setDirection(REVERSE);
-        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motor1.setDirection(REVERSE);
+        motor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftLift.setDirection(FORWARD);
-        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motor2.setDirection(FORWARD);
+        motor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        liftLock = (Servo) linearOpMode.hardwareMap.get("lift_lock");
+        shifter = (Servo) linearOpMode.hardwareMap.get("shifter");
 
-        //TODO: add limit switch (maybe rev magnetic switch?)
-
-        //TODO: add a rev distance sensor
-
-        unlock();
         if(auto){
             setPower(-0.6);
             threadSleep(500);
             setPower(0);
-            lock();
+            //lock();
             threadSleep(100);
             zeroSensors();
             setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -61,7 +59,7 @@ public class Lift implements Subsystem {
     @Override
     public void zeroSensors() {
         stop();
-        while(getLeftPosition()!=0 && getRightPosition()!=0)
+        while(getShifter1Position()!=0 && getShifter2Position()!=0)
             setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
@@ -74,104 +72,74 @@ public class Lift implements Subsystem {
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Lift position", getAveragePosition());
         telemetry.addData("Lift Power", getPower());
-        telemetry.addData("Lock Position", getLockPosition());
+        //telemetry.addData("Lock Position", getLockPosition());
     }
 
     public void setPower(double power){
-        leftLift.setPower(power);
-        rightLift.setPower(power);
+        motor1.setPower(power);
+        motor2.setPower(power);
     }
 
     public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior mode){
-        rightLift.setZeroPowerBehavior(mode);
-        leftLift.setZeroPowerBehavior(mode);
+        motor1.setZeroPowerBehavior(mode);
+        motor2.setZeroPowerBehavior(mode);
     }
 
     public void brake(){
         setPower(brakePower);
     }
 
-    public int getLeftPosition(){return leftLift.getCurrentPosition();}
+    public int getShifter1Position(){return motor1.getCurrentPosition();}
 
-    public int getRightPosition(){return rightLift.getCurrentPosition();}
+    public int getShifter2Position(){return motor2.getCurrentPosition();}
 
     public int getAveragePosition(){
-        int position = ((getLeftPosition()+getRightPosition())/2);
+        int position = ((getShifter1Position()+getShifter2Position())/2);
         return position;
     }
 
-    public double getLeftPower(){return leftLift.getPower();}
+    public double getShifter1Power(){return motor1.getPower();}
 
-    public double getRightPower(){return rightLift.getPower();}
+    public double getShifter2Power(){return motor2.getPower();}
 
     public double getPower(){
-        double power = ((getLeftPower()+getRightPower())/2);
+        double power = ((getShifter1Power()+getShifter2Power())/2);
         return power;
     }
 
     public void setRunMode(DcMotor.RunMode runMode){
-        rightLift.setMode(runMode);
-        leftLift.setMode(runMode);
+        motor1.setMode(runMode);
+        motor2.setMode(runMode);
     }
 
+    @Deprecated
     public DcMotor.RunMode getMode(){
-        return rightLift.getMode();
+        return motor2.getMode();
     }
 
+    @Deprecated
     public void setTarget(int target){
-        rightLift.setTargetPosition(target);
-        leftLift.setTargetPosition(target);
+        motor1.setTargetPosition(target);
+        motor2.setTargetPosition(target);
     }
 
     public boolean getLiftBusy(){
-        if(leftLift.isBusy() || rightLift.isBusy())
+        if(motor1.isBusy())
             return true;
         else
             return false;
     }
 
-    /*
-    @Deprecated
-    public void runToPosition(int target){
-        setTarget(target);
-        if (leftLift.getMode() != DcMotor.RunMode.RUN_TO_POSITION || rightLift.getMode() != DcMotor.RunMode.RUN_TO_POSITION){
-            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
-        setPower(1);
+    public void setShifterPosition(double pos){
+        shifter.setPosition(pos);
     }
 
-    @Deprecated
-    public void fullUp(){
-        setTarget(3800);
-    }
-    */
-
-    public void lockSetPosition(double position){
-        liftLock.setPosition(position);
+    public void shiftToHang(){
+        setShifterPosition(HANGPOS);
     }
 
-    public void unlock(){
-        lockSetPosition(unlockPosition);
-    }
-
-    public void lock(){
-        lockSetPosition(lockPosition);
-    }
-
-    public double getLockPosition(){
-        double position = liftLock.getPosition();
-        return position;
-    }
-
-    public boolean isLocked(){
-        return getLockPosition() != lockPosition;
-    }
-
-    public boolean shouldLiftStop(){
-        if(getAveragePosition()>=25){
-            return true;
-        }
-        else return false;
+    public void shiftToScore(){
+        setShifterPosition(SCOREPOS);
     }
 
     private void threadSleep(long milliseconds){
@@ -182,7 +150,4 @@ public class Lift implements Subsystem {
         }
     }
 
-    public boolean isBusy() {
-        return leftLift.isBusy() || rightLift.isBusy();
-    }
 }

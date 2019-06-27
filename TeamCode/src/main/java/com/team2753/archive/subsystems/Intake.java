@@ -20,9 +20,9 @@ public class Intake implements Subsystem {
 
     private DcMotor intakeMotor;
     private DcMotor slideMotor;
-    private Servo intakeLift1, intakeLift2;
+    private Servo intakeLift1;
 
-    DigitalChannel touch;
+    //DigitalChannel touch;
 
     private double gateDownPos = 1;
     private double gateUpPos = 0.15;
@@ -32,21 +32,21 @@ public class Intake implements Subsystem {
     public void init(Team753Linear linearOpMode, boolean auto) {
 
         intakeMotor = (DcMotor) linearOpMode.hardwareMap.get("intake");
-        slideMotor = (DcMotor) linearOpMode.hardwareMap.get("slide");
+        slideMotor = (DcMotor) linearOpMode.hardwareMap.get("intake_slide");
 
         //TODO fix directions
         intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        intakeLift2 = (Servo) linearOpMode.hardwareMap.get("intake_gate");
-        intakeLift1 = (Servo) linearOpMode.hardwareMap.get("intake_lift");
+        //intakeLift2 = (Servo) linearOpMode.hardwareMap.get("intake_gate");
+        intakeLift1 = (Servo) linearOpMode.hardwareMap.get("intake_flipper");
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        touch = linearOpMode.hardwareMap.get(DigitalChannel.class, "slideStop");
+        //touch = linearOpMode.hardwareMap.get(DigitalChannel.class, "slideStop");
 
-        touch.setMode(DigitalChannel.Mode.INPUT);
+        //touch.setMode(DigitalChannel.Mode.INPUT);
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -79,8 +79,8 @@ public class Intake implements Subsystem {
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Slide Position", slideMotor.getCurrentPosition());
         telemetry.addData("Intake Servo 1 Position", intakeLift1.getPosition());
-        telemetry.addData("Intake Servo 2 Position", intakeLift2.getPosition());
-        telemetry.addData("Touch State", getTouchState());
+        //telemetry.addData("Intake Servo 2 Position", intakeLift2.getPosition());
+        //telemetry.addData("Touch State", getTouchState());
     }
 
     private double oneRotation = ((1.0/2.25)/8.0);
@@ -113,7 +113,7 @@ public class Intake implements Subsystem {
     public void setIntakePosition(double pos){
         Range.clip(pos, 0, 1);
         intakeLift1.setPosition(pos);
-        intakeLift2.setPosition(1-pos);
+        //intakeLift2.setPosition(1-pos);
     }
 
 
@@ -149,6 +149,7 @@ public class Intake implements Subsystem {
     }
     */
 
+    /*
     public boolean getTouchState(){
         return touch.getState();
     }
@@ -157,6 +158,7 @@ public class Intake implements Subsystem {
         return !getTouchState();
     }
 
+*/
     @Deprecated
     private void threadSleep(long milliseconds){
         try {
