@@ -30,12 +30,15 @@ public class Teleop extends Team753Linear{
 
     private liftStates liftState = idle;
 
+    boolean HANGSPEED = false;
+    float dumper = 0;
+
     @Override
     public void runOpMode(){
 
         waitForStart("Teleop", false);
 
-        while(opModeIsActive()){
+        while(opModeIsActive()) {
 
             /**
              * Drive
@@ -53,23 +56,21 @@ public class Teleop extends Team753Linear{
                 } else {
                     Robot.getDrive().setLeftRightPower(0, 0);
                 }
-            }
-            else
-            {
+            } else {
                 float leftThrottle = gamepad1.left_stick_y;
                 float rightThrottle = gamepad1.right_stick_y;
 
                 //Invert the y values
-                leftThrottle = leftThrottle*-1;
-                rightThrottle = rightThrottle*-1;
+                leftThrottle = leftThrottle * -1;
+                rightThrottle = rightThrottle * -1;
 
                 // Clip the left and right throttle values so that they never exceed +/- 1.
                 leftThrottle = Range.clip(leftThrottle, -1, 1);
                 rightThrottle = Range.clip(rightThrottle, -1, 1);
 
                 //put a curve on
-                leftThrottle = (float) Math.sin(((Math.PI)/2)*leftThrottle);
-                rightThrottle = (float) Math.sin(((Math.PI)/2)*rightThrottle);
+                leftThrottle = (float) Math.sin(((Math.PI) / 2) * leftThrottle);
+                rightThrottle = (float) Math.sin(((Math.PI) / 2) * rightThrottle);
 
 
                 Robot.getDrive().setLeftRightPower(leftThrottle, rightThrottle);
@@ -99,7 +100,7 @@ public class Teleop extends Team753Linear{
              * Intake Slide
              */
 
-            if(Math.abs(gamepad2.left_stick_y)<= 0.05){
+            if (Math.abs(gamepad2.left_stick_y) <= 0.05) {
 
                 if (gamepad2.dpad_left) {
                     Robot.getIntake().setSlidePower(0.5);
@@ -109,13 +110,8 @@ public class Teleop extends Team753Linear{
                     Robot.getIntake().setSlidePower(0);
                     intakeOverride = false;
                 }
-
-                if(!intakeOverride){
-                    //autostuff
-                }
-            }
-            else{
-                intakeOverride = true;
+            } else {
+                //intakeOverride = true;
                 float intakeThrottle = gamepad2.left_stick_y;
                 //Clip
                 intakeThrottle = Range.clip(intakeThrottle, -1, 1);
@@ -127,26 +123,59 @@ public class Teleop extends Team753Linear{
                 Robot.getIntake().setSlidePower(intakeThrottle);
             }
 
+            /**
+             * Dumper
+             */
+
+            dumper = gamepad2.right_trigger;
+            if(gamepad2.right_trigger<=0.05)
+                dumper =0;
+            Robot.getLift().setDumperPosition(dumper*0.333);
 
 
+            /**
+             * shifter motors
+             */
+            if (Math.abs(gamepad2.right_stick_y) <= 0.05) {
 
-            /*
-            float intakeThrottle = gamepad2.left_stick_y;
-            //Clip
-            intakeThrottle = Range.clip(intakeThrottle, -1, 1);
-            //Scale
-            intakeThrottle = (float) scaleInput(intakeThrottle);
-            //Invert
-            intakeThrottle = intakeThrottle * -1;
-            //Apply power to motor
-            Robot.getIntake().setIntakePower(intakeThrottle);
-            */
+                if (gamepad2.dpad_up) {
+                    Robot.getLift().setPower(0.5);
+                } else if (gamepad2.dpad_down) {
+                    Robot.getLift().setPower(-0.5);
+                } else {
+                    Robot.getLift().setPower(0);
+                    intakeOverride = false;
+                }
+            } else {
+                liftOverride = true;
+                float liftThrottle = gamepad2.right_stick_y;
+                //Clip
+                liftThrottle = Range.clip(liftThrottle, -1, 1);
+                //Curve
+                liftThrottle = (float) Math.sin(((Math.PI) / 2) * liftThrottle);
+                //Invert
+                liftThrottle = liftThrottle * -1;
+
+                if(!HANGSPEED && liftThrottle<0) {
+                    liftThrottle = (float) (liftThrottle * .75);
+                }
+
+                //Apply power to motor
+                Robot.getLift().setPower(liftThrottle);
+            }
 
 
-            if(gamepad1.right_bumper)
+            /**
+             * shifter servo
+             */
+            if (gamepad2.x) {
                 Robot.getLift().shiftToScore();
-            if(gamepad1.left_bumper)
+                HANGSPEED = false;
+            }
+            if (gamepad2.b){
                 Robot.getLift().shiftToHang();
+                HANGSPEED = true;
+            }
 
             updateTelemetry();
         }

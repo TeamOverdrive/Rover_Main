@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.team2753.archive.Team753Linear;
+import com.team2753.archive.subsystems.Robot;
 
 import static com.team2753.archive.Constants.COUNTS_PER_INCH;
 
@@ -11,95 +12,98 @@ import static com.team2753.archive.Constants.COUNTS_PER_INCH;
  * Created by David Zheng | FTC 2753 Team Overdrive on 11/3/2018.
  */
 
-@Autonomous(name = "Crater Auto", group = "0_auto")
+@Autonomous(name = "Crater", group = "0_auto")
 
 public class Crater extends Team753Linear{
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode(){
 
-        waitForStart("Crater Autonomous", true);
-
-        //Flip phone
+        waitForStart("Crater", true);
 
         //Deploy intake
+        Robot.getIntake().intakeCenter();
 
         //Land
-        Robot.getLift().setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.getLift().setTarget(0);
-        Robot.getLift().setPower(-0.5);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 150){
-            /*
-            if(opModeIsActive() &&
-                    Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition &&
-                    Robot.getLift().getAveragePosition()<= 200){
-                Robot.getLift().unlock();
-            }
-            */
-        }
-        Robot.getLift().setPower(-0.15);
-        //Robot.getLift().unlock();
-        Robot.getLift().setTarget(3800);
-        //while(opModeIsActive() && Robot.getLift().getLockPosition() != Robot.getLift().unlockPosition){}
-        Robot.getLift().setPower(1);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() <= 3700){}
+
+        Robot.getLift().setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Robot.getLift().setPower(-1);
+        setTimer1(3000);
         Robot.getLift().setPower(0);
 
-        //DriveBase Forward
-        Robot.getDrive().encoderDrive(0.5, 16, 16, 4, this);
+        //Drive Forward
+        Robot.getDrive().encoderDrive(0.7, 12, 12, 3, this);
 
         //Lower lift
+        Robot.getLift().setPower(0.75);
 
-        //Sample
+        //drive to depot to claim
+        Robot.getDrive().encoderTurn(90, 0.8, 3, this);
+
+        Robot.getLift().setPower(0);
+        //Robot.getLift().shiftToScore();
+
+        Robot.getDrive().encoderDrive(0.8, 44,44, 4, this);
+
+        Robot.getDrive().encoderTurn(45, 0.8, 3, this);
+
         /*
-        double totalDistance = 78;
+        Robot.getIntake().setSlidePower(1);
+        setTimer1(2000);
+        Robot.getIntake().intakeAngledDown();
+        Robot.getIntake().setSlidePower(0);
 
-        Robot.getDrive().encoderTurn(90, 0.75, 6, this);
-        Robot.getDrive().encoderDrive(0.7, -24, -24, 5, this);
-        enableDetector();
-        Robot.getDrive().zeroSensors();
-        threadSleep(500);
+        Robot.getIntake().setIntakePower(-1);
+        setTimer1(1000);
+        Robot.getIntake().setIntakePower(0);
+        Robot.getIntake().intakeCenter();
 
-        while(opModeIsActive() && !goldAligned() && getGoldPos() < 300){
-            Robot.getDrive().setLeftRightPower(0.35, 0.35);
-        }
-
-        double leftPos = Math.abs(Robot.getDrive().getLeftCurrentPosition() * (1/COUNTS_PER_INCH));
-        double rightPos = Math.abs(Robot.getDrive().getRightCurrentPosition() * (1/COUNTS_PER_INCH));
-
-        telemetry.addData("Distance Travled", ((leftPos+rightPos)/2));
-        telemetry.update();
-
-        Robot.getDrive().encoderTurn(-90, 0.75, 4, this);
-        Robot.getDrive().encoderDrive(0.75, 18, 12, 5, this);
-        Robot.getDrive().encoderDrive(0.75, -18, -12, 5, this);
-        Robot.getDrive().encoderTurn(90, 0.75, 4, this);
-
-
-        double distanceRemaining = 76 - ((leftPos+rightPos)/2);
-
-
-        Robot.getDrive().encoderDrive(0.75, distanceRemaining, distanceRemaining, 4, this);
+        Robot.getIntake().setSlidePower(-1);
         */
 
-        //DriveBase to Depot
-        Robot.getDrive().encoderTurn(90, .6, 4, this);
-
-        Robot.getDrive().encoderDrive(.7, 46, 46, 4, this);
-        Robot.getDrive().encoderTurn(45, .75, 5, this);
-        Robot.getDrive().encoderDrive(0.7, 38, 38, 5, this);
-
-        //Deposit Team Marker
-        //Robot.getMarker().deploy();
-        Robot.getIntake().setIntakePower(0.7);
-        Robot.getLift().setTarget(0);
-        Robot.getLift().setPower(-0.75);
-        while(opModeIsActive() && Robot.getLift().getAveragePosition() >= 100){}
-        Robot.getLift().setPower(0);
+        Robot.getDrive().encoderDrive(1,48, 48, 3, this);
+        Robot.getIntake().intakeAngledDown();
+        Robot.getIntake().setIntakePower(-1);
+        setTimer1(750);
         Robot.getIntake().setIntakePower(0);
+        Robot.getDrive().encoderDrive(1, -48, -48, 3, this);
 
-        //Return to Crater
-        Robot.getDrive().encoderDrive(0.8, -66, - 66, 5, this);
 
+        Robot.getDrive().encoderTurn(-45, 0.75, 3, this);
+
+        Robot.getIntake().setSlidePower(0);
+
+        Robot.getDrive().encoderDrive(0.8, -44, -44, 4, this);
+
+        //Robot.getDrive().encoderTurn(-90, 0.8, 3, this);
+
+        Robot.getIntake().intakeDown();
+
+        //sample gold mineral
+        switch(goldPosition){
+            case LEFT:
+                Robot.getDrive().encoderTurn(-40, 0.75, 3, this);
+                Robot.getDrive().encoderDrive(.8, 16, 16,3, this);
+                Robot.getDrive().encoderDrive(.8, -16, -16,3, this);
+                Robot.getDrive().encoderTurn(-40, 0.75, 3, this);
+                break;
+            case CENTER:
+                Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+                Robot.getIntake().intakeDown();
+                Robot.getIntake().setIntakePower(1);
+                setTimer1(500);
+                break;
+            case RIGHT:
+                Robot.getDrive().encoderTurn(-135, 0.75, 3, this);
+                Robot.getIntake().intakeDown();
+                Robot.getIntake().setIntakePower(1);
+                setTimer1(500);
+            default:
+                Robot.getDrive().encoderTurn(-90, 0.75, 3, this);
+                Robot.getIntake().intakeDown();
+                Robot.getIntake().setIntakePower(1);
+                setTimer1(500);
+                break;
+        }
         finalAction();
     }
 }

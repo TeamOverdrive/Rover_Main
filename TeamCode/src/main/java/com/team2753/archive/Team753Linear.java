@@ -79,19 +79,24 @@ public abstract class Team753Linear extends LinearOpMode{
             while(!isStarted() && !isStopRequested()){
                 if(goldVisible()){
                     if(goldAligned()) {
-                        goldPosition = Gold_Position.LEFT;
-                        telemetry.addLine("Gold Left");
-                    }
-                    else {
+                        //left side of screen
                         goldPosition = Gold_Position.CENTER;
                         telemetry.addLine("Gold Center");
                     }
+                    else {
+                        //right side of screen
+
+                        goldPosition = Gold_Position.RIGHT;
+                        telemetry.addLine("Gold Right");
+                    }
                 }
                 else {
-                    goldPosition = Gold_Position.RIGHT;
-                    telemetry.addLine("Gold Right");
+                    //not visible
+                    goldPosition = Gold_Position.LEFT;
+                    telemetry.addLine("Gold Left");
                 }
                 telemetry.update();
+                Robot.getLift().updateSlaveMotor();
             }
             disableDetector();
         }

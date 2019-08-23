@@ -24,9 +24,6 @@ public class Intake implements Subsystem {
 
     //DigitalChannel touch;
 
-    private double gateDownPos = 1;
-    private double gateUpPos = 0.15;
-
 
     @Override
     public void init(Team753Linear linearOpMode, boolean auto) {
@@ -34,15 +31,14 @@ public class Intake implements Subsystem {
         intakeMotor = (DcMotor) linearOpMode.hardwareMap.get("intake");
         slideMotor = (DcMotor) linearOpMode.hardwareMap.get("intake_slide");
 
-        //TODO fix directions
-        intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //intakeLift2 = (Servo) linearOpMode.hardwareMap.get("intake_gate");
         intakeLift1 = (Servo) linearOpMode.hardwareMap.get("intake_flipper");
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //touch = linearOpMode.hardwareMap.get(DigitalChannel.class, "slideStop");
 
@@ -55,11 +51,8 @@ public class Intake implements Subsystem {
         if(auto){
             setSlidePower(0);
             zeroSensors();
+            intakeUp();
         }
-
-        //TODO: add intake motors
-        //TODO: add rev touch sensor
-
     }
 
     @Override
@@ -79,7 +72,7 @@ public class Intake implements Subsystem {
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Slide Position", slideMotor.getCurrentPosition());
         telemetry.addData("Intake Servo 1 Position", intakeLift1.getPosition());
-        //telemetry.addData("Intake Servo 2 Position", intakeLift2.getPosition());
+        telemetry.addData("Intake Slide Power", slideMotor.getPower());
         //telemetry.addData("Touch State", getTouchState());
     }
 
@@ -111,7 +104,7 @@ public class Intake implements Subsystem {
     }
 
     public void setIntakePosition(double pos){
-        Range.clip(pos, 0, 1);
+        Range.clip(pos, -1, 1);
         intakeLift1.setPosition(pos);
         //intakeLift2.setPosition(1-pos);
     }
@@ -122,16 +115,18 @@ public class Intake implements Subsystem {
     }
 
     public void intakeDown(){
-        setIntakePosition(0.95);
+        setIntakePosition(0.65);
     }
 
     public void intakeCenter(){
-        setIntakePosition(0.35);
+        setIntakePosition(0.3);
     }
 
     public void intakeAngledDown(){
-        setIntakePosition(0.75);
+        setIntakePosition(0.45);
     }
+
+
 
     /*
 
